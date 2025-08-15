@@ -154,22 +154,14 @@ export const Preview = () => {
             <Button variant="outline" onClick={() => navigate("/project-data")} className="bg-purple-600 text-white border-purple-500 hover:bg-purple-700 px-6 py-2">
               العودة للبيانات
             </Button>
-            <Button 
-              onClick={handleFinish}
-              disabled={isFinishing}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2"
-            >
-              {isFinishing ? (
-                <div className="flex items-center gap-2">
+            <Button onClick={handleFinish} disabled={isFinishing} className="bg-green-600 hover:bg-green-700 text-white px-6 py-2">
+              {isFinishing ? <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                   جاري التحضير...
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
+                </div> : <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4" />
                   النتيجة النهائية
-                </div>
-              )}
+                </div>}
             </Button>
           </div>
           
@@ -180,17 +172,7 @@ export const Preview = () => {
             <p className="text-base text-gray-300 mb-3 leading-relaxed">
               {project?.title || "مشروع المنزل التقليدي"} - عرض توضيحي
             </p>
-            <div className="flex items-center gap-2 justify-end flex-wrap">
-              <Badge variant="outline" className="text-green-400 border-green-400 px-2 py-1 text-xs">
-                تفاعلي
-              </Badge>
-              <Badge variant="outline" className="text-blue-400 border-blue-400 px-2 py-1 text-xs">
-                قيد التعديل
-              </Badge>
-              <Badge variant="outline" className="text-purple-400 border-purple-400 px-2 py-1 text-xs">
-                مولد ثلاثي الأبعاد
-              </Badge>
-            </div>
+            
           </div>
         </div>
 
