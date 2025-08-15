@@ -7,7 +7,7 @@ import { Navigation } from "@/components/Navigation";
 import { Welcome } from "./pages/Welcome";
 import { ServiceSelection } from "./pages/ServiceSelection";
 import { ProjectData } from "./pages/ProjectData";
-import { Input } from "./pages/Input";
+
 import { Preview } from "./pages/Preview";
 import { FinalResults } from "./pages/FinalResults";
 import { History } from "./pages/History";
@@ -27,7 +27,7 @@ const App = () => (
           <Route path="/" element={<Welcome />} />
           <Route path="/services" element={<ServiceSelection />} />
           <Route path="/project-data" element={<ProjectData />} />
-          <Route path="/input" element={<Input />} />
+          
           <Route path="/preview" element={<Preview />} />
           <Route path="/final-results" element={<FinalResults />} />
           <Route path="/history" element={<History />} />
