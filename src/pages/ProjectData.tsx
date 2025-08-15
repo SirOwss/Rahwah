@@ -244,7 +244,7 @@ export const ProjectData = () => {
                 className="w-full btn-primary mt-6"
                 size="lg"
               >
-                تفعيل الخريطة
+                إنشاء المخططات
               </Button>
             </div>
           </Card>

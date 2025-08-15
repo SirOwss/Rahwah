@@ -72,7 +72,7 @@ export const Welcome = () => {
               <Button 
                 size="lg" 
                 className="btn-primary px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl font-bold shadow-2xl mobile-touch w-full sm:w-auto"
-                onClick={() => navigate("/services")}
+                onClick={() => navigate("/project-data")}
               >
                 ابدأ مشروعك الآن
                 <ArrowRight className="w-5 sm:w-6 h-5 sm:h-6 mr-3" />
@@ -82,7 +82,7 @@ export const Welcome = () => {
                 variant="outline" 
                 size="lg" 
                 className="px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl border-2 border-white/30 text-white hover:bg-white hover:text-black mobile-touch w-full sm:w-auto"
-                onClick={() => navigate("/services")}
+                onClick={() => navigate("/project-data")}
               >
                 جرب مجاناً
               </Button>
@@ -132,7 +132,7 @@ export const Welcome = () => {
           <Button 
             size="lg" 
             className="btn-primary px-12 py-6 text-xl font-bold shadow-2xl"
-            onClick={() => navigate("/services")}
+            onClick={() => navigate("/project-data")}
           >
             ابدأ الآن - مجاناً
             <ArrowRight className="w-6 h-6 mr-3" />
