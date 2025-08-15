@@ -115,88 +115,88 @@ export const FinalResults = () => {
   }
 
   return (
-    <div className="min-h-screen pt-16 bg-background print:pt-0">
-      <div className="container mx-auto max-w-7xl px-4 py-6 md:py-8 print:max-w-none print:px-8">
+    <div className="min-h-screen pt-12 md:pt-16 bg-background print:pt-0">
+      <div className="container mx-auto max-w-7xl px-3 md:px-4 py-4 md:py-6 lg:py-8 print:max-w-none print:px-8">
         
         {/* Cover Page */}
-        <div className="mb-8 p-8 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-lg print:break-after-page">
-          <div className="text-center space-y-6">
+        <div className="mb-6 md:mb-8 p-4 md:p-6 lg:p-8 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-lg print:break-after-page">
+          <div className="text-center space-y-4 md:space-y-6">
             <div className="space-y-2">
-              <h1 className="text-4xl md:text-5xl font-bold text-primary">
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-primary leading-tight">
                 تقرير تصميم مبنى ثلاثي الأبعاد
               </h1>
-              <p className="text-xl text-muted-foreground">مدفوع بالذكاء الاصطناعي</p>
+              <p className="text-base md:text-xl text-muted-foreground">مدفوع بالذكاء الاصطناعي</p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-8 mt-12">
-              <div className="space-y-4 text-right">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-8 md:mt-12">
+              <div className="space-y-3 md:space-y-4 text-right">
                 <div>
-                  <span className="text-muted-foreground">اسم المشروع:</span>
-                  <p className="font-semibold text-lg">{project.title || "منزل تقليدي بفناء مركزي"}</p>
+                  <span className="text-sm md:text-base text-muted-foreground">اسم المشروع:</span>
+                  <p className="font-semibold text-base md:text-lg">{project.title || "منزل تقليدي بفناء مركزي"}</p>
                 </div>
                 <div>
-                  <span className="text-muted-foreground">العميل:</span>
-                  <p className="font-semibold">العميل الكريم</p>
+                  <span className="text-sm md:text-base text-muted-foreground">العميل:</span>
+                  <p className="font-semibold text-sm md:text-base">العميل الكريم</p>
                 </div>
                 <div>
-                  <span className="text-muted-foreground">الموقع:</span>
-                  <p className="font-semibold">الرياض، المملكة العربية السعودية</p>
+                  <span className="text-sm md:text-base text-muted-foreground">الموقع:</span>
+                  <p className="font-semibold text-sm md:text-base">الرياض، المملكة العربية السعودية</p>
                 </div>
               </div>
               
-              <div className="space-y-4 text-right">
+              <div className="space-y-3 md:space-y-4 text-right">
                 <div>
-                  <span className="text-muted-foreground">المصمم/النظام:</span>
-                  <p className="font-semibold flex items-center gap-2">
+                  <span className="text-sm md:text-base text-muted-foreground">المصمم/النظام:</span>
+                  <p className="font-semibold flex items-center gap-2 text-sm md:text-base">
                     <Bot className="w-4 h-4" />
                     نظام الذكاء الاصطناعي المعماري
                   </p>
                 </div>
                 <div>
-                  <span className="text-muted-foreground">التاريخ:</span>
-                  <p className="font-semibold">{new Date().toLocaleDateString('ar-SA')}</p>
+                  <span className="text-sm md:text-base text-muted-foreground">التاريخ:</span>
+                  <p className="font-semibold text-sm md:text-base">{new Date().toLocaleDateString('ar-SA')}</p>
                 </div>
                 <div>
-                  <span className="text-muted-foreground">رقم الإصدار:</span>
-                  <p className="font-semibold">v1.0</p>
+                  <span className="text-sm md:text-base text-muted-foreground">رقم الإصدار:</span>
+                  <p className="font-semibold text-sm md:text-base">v1.0</p>
                 </div>
                 <div>
-                  <span className="text-muted-foreground">السرية:</span>
-                  <p className="font-semibold">عام</p>
+                  <span className="text-sm md:text-base text-muted-foreground">السرية:</span>
+                  <p className="font-semibold text-sm md:text-base">عام</p>
                 </div>
               </div>
             </div>
             
-            <div className="mt-12">
+            <div className="mt-8 md:mt-12">
               <Interactive3DViewer 
                 modelType="traditional-house" 
-                className="w-full h-[300px] rounded-lg border"
+                className="w-full h-[200px] md:h-[300px] rounded-lg border"
               />
             </div>
           </div>
         </div>
 
         {/* Main Navigation */}
-        <div className="mb-8 print:hidden">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
+        <div className="mb-6 md:mb-8 print:hidden">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-4 md:mb-6">
             <div className="space-y-2">
               <Badge variant="default" className="bg-green-500/10 text-green-600 border-green-500/20">
                 <CheckCircle className="w-3 h-3 mr-1" />
                 تم الإنجاز
               </Badge>
-              <h2 className="text-2xl font-bold">التقرير المعماري الشامل</h2>
+              <h2 className="text-xl md:text-2xl font-bold">التقرير المعماري الشامل</h2>
             </div>
             
-            <div className="flex flex-wrap gap-3">
-              <Button variant="outline" onClick={handlePrint}>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-2 md:gap-3 w-full lg:w-auto">
+              <Button variant="outline" onClick={handlePrint} className="text-xs md:text-sm">
                 <Printer className="w-4 h-4 mr-2" />
                 طباعة التقرير
               </Button>
-              <Button variant="outline" onClick={saveToHistory}>
+              <Button variant="outline" onClick={saveToHistory} className="text-xs md:text-sm">
                 <Save className="w-4 h-4 mr-2" />
                 حفظ في التاريخ
               </Button>
-              <Button onClick={startNewProject} className="btn-primary">
+              <Button onClick={startNewProject} className="btn-primary text-xs md:text-sm">
                 <Plus className="w-4 h-4 mr-2" />
                 مشروع جديد
               </Button>
@@ -204,13 +204,13 @@ export const FinalResults = () => {
           </div>
           
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6">
-              <TabsTrigger value="overview">نظرة عامة</TabsTrigger>
-              <TabsTrigger value="ai-inputs">مدخلات الذكاء الاصطناعي</TabsTrigger>
-              <TabsTrigger value="site-analysis">تحليل الموقع</TabsTrigger>
-              <TabsTrigger value="technical">المواصفات التقنية</TabsTrigger>
-              <TabsTrigger value="sustainability">الاستدامة</TabsTrigger>
-              <TabsTrigger value="cost-analysis">التحليل المالي</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 h-auto">
+              <TabsTrigger value="overview" className="text-xs md:text-sm p-2 md:p-3">نظرة عامة</TabsTrigger>
+              <TabsTrigger value="ai-inputs" className="text-xs md:text-sm p-2 md:p-3">مدخلات الذكاء الاصطناعي</TabsTrigger>
+              <TabsTrigger value="site-analysis" className="text-xs md:text-sm p-2 md:p-3">تحليل الموقع</TabsTrigger>
+              <TabsTrigger value="technical" className="text-xs md:text-sm p-2 md:p-3">المواصفات التقنية</TabsTrigger>
+              <TabsTrigger value="sustainability" className="text-xs md:text-sm p-2 md:p-3">الاستدامة</TabsTrigger>
+              <TabsTrigger value="cost-analysis" className="text-xs md:text-sm p-2 md:p-3">التحليل المالي</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
@@ -228,18 +228,18 @@ export const FinalResults = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="bg-primary/5 p-4 rounded-lg">
-                    <h3 className="font-semibold text-primary mb-2">مساحة الموقع الإجمالية</h3>
-                    <p className="text-2xl font-bold">500 م²</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                  <div className="bg-primary/5 p-3 md:p-4 rounded-lg">
+                    <h3 className="font-semibold text-primary mb-2 text-sm md:text-base">مساحة الموقع الإجمالية</h3>
+                    <p className="text-xl md:text-2xl font-bold">500 م²</p>
                   </div>
-                  <div className="bg-primary/5 p-4 rounded-lg">
-                    <h3 className="font-semibold text-primary mb-2">المساحة البنائية</h3>
-                    <p className="text-2xl font-bold">250 م²</p>
+                  <div className="bg-primary/5 p-3 md:p-4 rounded-lg">
+                    <h3 className="font-semibold text-primary mb-2 text-sm md:text-base">المساحة البنائية</h3>
+                    <p className="text-xl md:text-2xl font-bold">250 م²</p>
                   </div>
-                  <div className="bg-primary/5 p-4 rounded-lg">
-                    <h3 className="font-semibold text-primary mb-2">عدد الطوابق</h3>
-                    <p className="text-2xl font-bold">طابق واحد</p>
+                  <div className="bg-primary/5 p-3 md:p-4 rounded-lg">
+                    <h3 className="font-semibold text-primary mb-2 text-sm md:text-base">عدد الطوابق</h3>
+                    <p className="text-xl md:text-2xl font-bold">طابق واحد</p>
                   </div>
                 </div>
                 
@@ -251,10 +251,10 @@ export const FinalResults = () => {
                     تم تصميم المشروع باستخدام تقنيات الذكاء الاصطناعي المتقدمة لضمان الدقة والكفاءة في التصميم.
                   </p>
                   
-                  <div className="grid md:grid-cols-2 gap-4 mt-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-6">
                     <div>
-                      <h4 className="font-medium mb-2">المؤشرات الرئيسية:</h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
+                      <h4 className="font-medium mb-2 text-sm md:text-base">المؤشرات الرئيسية:</h4>
+                      <ul className="space-y-1 text-xs md:text-sm text-muted-foreground">
                         <li>• نسبة التغطية: 50%</li>
                         <li>• معامل الكثافة: 0.5</li>
                         <li>• السعة التصميمية: 6-8 أشخاص</li>
@@ -262,9 +262,9 @@ export const FinalResults = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-2">التقدير المبدئي للتكلفة:</h4>
+                      <h4 className="font-medium mb-2 text-sm md:text-base">التقدير المبدئي للتكلفة:</h4>
                       <div className="bg-muted/30 p-3 rounded-lg">
-                        <p className="text-lg font-bold text-primary">450,000 ريال سعودي</p>
+                        <p className="text-base md:text-lg font-bold text-primary">450,000 ريال سعودي</p>
                         <p className="text-xs text-muted-foreground mt-1">شامل المواد والعمالة</p>
                       </div>
                     </div>
