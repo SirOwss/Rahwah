@@ -45,7 +45,7 @@ export const ProjectData = () => {
     toast.success("تم حفظ بيانات المشروع بنجاح!");
     
     setTimeout(() => {
-      navigate("/preview");
+      navigate("/processing");
     }, 1500);
   };
 
