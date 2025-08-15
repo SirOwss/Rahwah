@@ -147,30 +147,37 @@ export const Preview = () => {
           </div>
         </div>}
 
-      <div className="container mx-auto max-w-7xl px-4 py-6">
+      <div className="container mx-auto max-w-7xl px-4 py-8">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6 bg-transparent">
+        <div className="flex justify-between items-start mb-8 bg-transparent">
           <div className="flex items-center gap-4">
-            <Button variant="outline" onClick={() => navigate("/project-data")} className="bg-purple-600 text-white border-purple-500 hover:bg-purple-700">
-              العودة للبيركال
+            <Button variant="outline" onClick={() => navigate("/project-data")} className="bg-purple-600 text-white border-purple-500 hover:bg-purple-700 px-6 py-2">
+              العودة للبيانات
             </Button>
-            
           </div>
           
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-2 text-right">
-              محرر التصميم - {project?.title || "مشروع المنزل التقليدي"} - عرض توضيحي
+          <div className="text-center flex-1 mx-8">
+            <h1 className="text-3xl font-bold mb-3 text-white leading-tight">
+              محرر التصميم
             </h1>
-            <div className="flex items-center gap-4 justify-center">
-              <Badge variant="outline" className="text-purple-400 border-purple-400">3D مولد</Badge>
-              <Badge variant="outline" className="text-blue-400 border-blue-400">قيد التعديل</Badge>
+            <p className="text-lg text-gray-300 mb-4">
+              {project?.title || "مشروع المنزل التقليدي"} - عرض توضيحي
+            </p>
+            <div className="flex items-center gap-3 justify-center">
+              <Badge variant="outline" className="text-purple-400 border-purple-400 px-3 py-1">
+                مولد ثلاثي الأبعاد
+              </Badge>
+              <Badge variant="outline" className="text-blue-400 border-blue-400 px-3 py-1">
+                قيد التعديل
+              </Badge>
+              <Badge variant="outline" className="text-green-400 border-green-400 px-3 py-1">
+                تفاعلي
+              </Badge>
             </div>
           </div>
 
           <div className="flex gap-2">
-            
-            
-            
+            {/* يمكن إضافة أزرار إضافية هنا */}
           </div>
         </div>
 
