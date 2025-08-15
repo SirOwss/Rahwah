@@ -154,9 +154,7 @@ export const Preview = () => {
             <Button variant="outline" onClick={() => navigate("/project-data")} className="bg-purple-600 text-white border-purple-500 hover:bg-purple-700">
               العودة للبيركال
             </Button>
-            <Badge className="bg-purple-600 text-white">
-              الانتهاء والحصول على النتائج النهائية
-            </Badge>
+            
           </div>
           
           <div className="text-center">
