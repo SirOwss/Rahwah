@@ -149,7 +149,7 @@ export const Preview = () => {
 
       <div className="container mx-auto max-w-7xl px-4 py-8">
         {/* Header */}
-        <div className="flex justify-between items-start mb-8 bg-transparent">
+        <div className="flex justify-between items-center mb-8 bg-transparent">
           <div className="flex items-center gap-4">
             <Button variant="outline" onClick={() => navigate("/project-data")} className="bg-purple-600 text-white border-purple-500 hover:bg-purple-700 px-6 py-2">
               العودة للبيانات
@@ -173,21 +173,21 @@ export const Preview = () => {
             </Button>
           </div>
           
-          <div className="text-right">
-            <h1 className="text-3xl font-bold mb-3 text-white leading-tight">
+          <div className="text-right max-w-md">
+            <h1 className="text-3xl font-bold mb-2 text-white leading-tight">
               محرر التصميم
             </h1>
-            <p className="text-lg text-gray-300 mb-4">
+            <p className="text-base text-gray-300 mb-3 leading-relaxed">
               {project?.title || "مشروع المنزل التقليدي"} - عرض توضيحي
             </p>
-            <div className="flex items-center gap-3 justify-end">
-              <Badge variant="outline" className="text-green-400 border-green-400 px-3 py-1">
+            <div className="flex items-center gap-2 justify-end flex-wrap">
+              <Badge variant="outline" className="text-green-400 border-green-400 px-2 py-1 text-xs">
                 تفاعلي
               </Badge>
-              <Badge variant="outline" className="text-blue-400 border-blue-400 px-3 py-1">
+              <Badge variant="outline" className="text-blue-400 border-blue-400 px-2 py-1 text-xs">
                 قيد التعديل
               </Badge>
-              <Badge variant="outline" className="text-purple-400 border-purple-400 px-3 py-1">
+              <Badge variant="outline" className="text-purple-400 border-purple-400 px-2 py-1 text-xs">
                 مولد ثلاثي الأبعاد
               </Badge>
             </div>
