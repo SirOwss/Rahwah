@@ -182,117 +182,15 @@ export const Preview = () => {
         </div>
 
         <div className="grid grid-cols-12 gap-6 h-[calc(100vh-200px)]">
-          {/* Customization Trigger Button */}
-          <div className="col-span-1 flex flex-col items-center justify-start pt-4">
-            <Sheet open={isCustomizationOpen} onOpenChange={setIsCustomizationOpen}>
-              <SheetTrigger asChild>
-                <Button variant="outline" className="bg-purple-600 text-white border-purple-500 hover:bg-purple-700 mb-4 p-3">
-                  <Settings className="w-5 h-5" />
-                </Button>
-              </SheetTrigger>
-              
-              <SheetContent side="right" className="w-80 bg-gray-800 text-white border-gray-700">
-                <SheetHeader>
-                  <SheetTitle className="text-white flex items-center gap-2">
-                    <Settings className="w-5 h-5" />
-                    خيارات التخصيص
-                  </SheetTitle>
-                  <SheetClose asChild>
-                    <Button variant="ghost" size="sm" className="absolute left-4 top-4 text-white hover:bg-gray-700">
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </SheetClose>
-                </SheetHeader>
-                
-                <div className="space-y-6 mt-6">
-                  {/* Color Selection */}
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Palette className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm font-medium">لون الواجهة</span>
-                    </div>
-                    <div className="w-12 h-12 rounded-lg border-2 border-purple-500" style={{
-                    backgroundColor: customization.color
-                  }}>
-                    </div>
-                    <span className="text-xs text-gray-400 mt-1 block">#8b5cf6</span>
-                  </div>
-
-                  {/* Height Control */}
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <ArrowUpDown className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm font-medium">الارتفاع (م)</span>
-                    </div>
-                    <Slider value={customization.height} onValueChange={value => handleCustomizationChange('height', value)} max={15} min={5} step={1} className="w-full" />
-                    <span className="text-xs text-gray-400">{customization.height[0]} متر</span>
-                  </div>
-
-                  {/* Additional controls with sliders */}
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <ArrowUpDown className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm font-medium">العمق (م)</span>
-                    </div>
-                    <Slider defaultValue={[8]} max={15} min={5} step={1} className="w-full" />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <ArrowUpDown className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm font-medium">العرض (م)</span>
-                    </div>
-                    <Slider defaultValue={[6]} max={15} min={5} step={1} className="w-full" />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Square className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm font-medium">النوافذ</span>
-                    </div>
-                    <Slider defaultValue={[4]} max={10} min={2} step={1} className="w-full" />
-                  </div>
-
-                  {/* Materials Section */}
-                  <div>
-                    <h4 className="text-sm font-medium mb-2">الخامات</h4>
-                    <Button variant="outline" size="sm" className="w-full text-xs text-white border-gray-600 hover:bg-gray-700" onClick={() => handleCustomizationChange('material', customization.material === 'حجر طبيعي' ? 'طوب' : 'حجر طبيعي')}>
-                      {customization.material}
-                    </Button>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="space-y-2 pt-4">
-                    <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white" onClick={applyCustomizations} disabled={isApplying}>
-                      {isApplying ? "جاري التطبيق..." : "تطبيق"}
-                    </Button>
-                    <Button variant="outline" className="w-full text-white border-gray-600 hover:bg-gray-700" onClick={() => {
-                    setCustomization({
-                      color: "#8b5cf6",
-                      material: "حجر طبيعي",
-                      height: [8],
-                      windowStyle: "تقليدي",
-                      roomLayout: "مفتوح"
-                    });
-                    toast.success("تم إعادة ضبط الخيارات");
-                  }}>
-                      إعادة الضبط
-                    </Button>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
-
           {/* 3D Model Viewer */}
-          <div className="col-span-7 bg-gray-800 rounded-lg p-4 mx-0 px-[16px]">
+          <div className="col-span-6 bg-gray-800 rounded-lg p-4 relative">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold flex items-center gap-2">
                 <RotateCw className="w-5 h-5" />
                 المعاينة ثلاثية الأبعاد
               </h3>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-400">% تكبير 100</span>
+                <span className="text-xs text-gray-400">تكبير 100%</span>
                 <div className="flex gap-1">
                   <Button variant="ghost" size="sm">
                     <RotateCw className="w-4 h-4" />
@@ -307,33 +205,135 @@ export const Preview = () => {
               </div>
             </div>
             
-            <div className="bg-gradient-to-br from-blue-900 to-purple-900 rounded-lg h-[calc(100%-60px)] flex items-center justify-center">
+            <div className="bg-gradient-to-br from-blue-900 to-purple-900 rounded-lg h-[calc(100%-60px)] flex items-center justify-center relative">
               <Interactive3DViewer modelType="traditional-house" className="w-full h-full" />
+              
+              {/* Customization Button - positioned inside 3D viewer */}
+              <div className="absolute top-4 left-4">
+                <Sheet open={isCustomizationOpen} onOpenChange={setIsCustomizationOpen}>
+                  <SheetTrigger asChild>
+                    <Button variant="outline" className="bg-purple-600 text-white border-purple-500 hover:bg-purple-700 p-3">
+                      <Settings className="w-5 h-5" />
+                    </Button>
+                  </SheetTrigger>
+                  
+                  <SheetContent side="right" className="w-80 bg-gray-800 text-white border-gray-700">
+                    <SheetHeader>
+                      <SheetTitle className="text-white flex items-center gap-2">
+                        <Settings className="w-5 h-5" />
+                        خيارات التخصيص
+                      </SheetTitle>
+                      <SheetClose asChild>
+                        <Button variant="ghost" size="sm" className="absolute left-4 top-4 text-white hover:bg-gray-700">
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </SheetClose>
+                    </SheetHeader>
+                    
+                    <div className="space-y-6 mt-6">
+                      {/* Color Selection */}
+                      <div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <Palette className="w-4 h-4 text-purple-400" />
+                          <span className="text-sm font-medium">لون الواجهة</span>
+                        </div>
+                        <div className="w-12 h-12 rounded-lg border-2 border-purple-500" style={{
+                        backgroundColor: customization.color
+                      }}>
+                        </div>
+                        <span className="text-xs text-gray-400 mt-1 block">#8b5cf6</span>
+                      </div>
+
+                      {/* Height Control */}
+                      <div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <ArrowUpDown className="w-4 h-4 text-purple-400" />
+                          <span className="text-sm font-medium">الارتفاع (م)</span>
+                        </div>
+                        <Slider value={customization.height} onValueChange={value => handleCustomizationChange('height', value)} max={15} min={5} step={1} className="w-full" />
+                        <span className="text-xs text-gray-400">{customization.height[0]} متر</span>
+                      </div>
+
+                      {/* Additional controls with sliders */}
+                      <div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <ArrowUpDown className="w-4 h-4 text-purple-400" />
+                          <span className="text-sm font-medium">العمق (م)</span>
+                        </div>
+                        <Slider defaultValue={[8]} max={15} min={5} step={1} className="w-full" />
+                      </div>
+
+                      <div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <ArrowUpDown className="w-4 h-4 text-purple-400" />
+                          <span className="text-sm font-medium">العرض (م)</span>
+                        </div>
+                        <Slider defaultValue={[6]} max={15} min={5} step={1} className="w-full" />
+                      </div>
+
+                      <div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <Square className="w-4 h-4 text-purple-400" />
+                          <span className="text-sm font-medium">النوافذ</span>
+                        </div>
+                        <Slider defaultValue={[4]} max={10} min={2} step={1} className="w-full" />
+                      </div>
+
+                      {/* Materials Section */}
+                      <div>
+                        <h4 className="text-sm font-medium mb-2">الخامات</h4>
+                        <Button variant="outline" size="sm" className="w-full text-xs text-white border-gray-600 hover:bg-gray-700" onClick={() => handleCustomizationChange('material', customization.material === 'حجر طبيعي' ? 'طوب' : 'حجر طبيعي')}>
+                          {customization.material}
+                        </Button>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="space-y-2 pt-4">
+                        <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white" onClick={applyCustomizations} disabled={isApplying}>
+                          {isApplying ? "جاري التطبيق..." : "تطبيق"}
+                        </Button>
+                        <Button variant="outline" className="w-full text-white border-gray-600 hover:bg-gray-700" onClick={() => {
+                        setCustomization({
+                          color: "#8b5cf6",
+                          material: "حجر طبيعي",
+                          height: [8],
+                          windowStyle: "تقليدي",
+                          roomLayout: "مفتوح"
+                        });
+                        toast.success("تم إعادة ضبط الخيارات");
+                      }}>
+                          إعادة الضبط
+                        </Button>
+                      </div>
+                    </div>
+                  </SheetContent>
+                </Sheet>
+              </div>
             </div>
           </div>
 
           {/* 2D Floor Plan */}
-          <div className="col-span-4">
+          <div className="col-span-6">
             <Card className="bg-gray-800 p-4 h-full">
               <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-semibold flex items-center gap-2">
+                <h4 className="text-lg font-semibold flex items-center gap-2">
                   <Grid3X3 className="w-4 h-4" />
                   المعاينة ثنائية الأبعاد
                 </h4>
-                <div className="flex gap-1">
-                  <Button variant="ghost" size="sm" className="text-purple-400">
-                    مبادرة للشبكة
+                <div className="flex gap-2 items-center">
+                  <Button variant="ghost" size="sm" className="text-purple-400 hover:bg-purple-900/20">
+                    شبكة
                   </Button>
                   <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">
                     قابل للتعديل
                   </Badge>
                 </div>
               </div>
-              <div className="bg-white rounded-lg h-[calc(100%-40px)] relative">
+              <div className="bg-white rounded-lg h-[calc(100%-60px)] relative">
                 <canvas ref={canvasRef} className="w-full h-full rounded-lg" style={{
                 border: "1px solid #e2e8f0"
               }} />
-                <div className="absolute bottom-2 left-2 text-xs text-gray-500">
+                <div className="absolute bottom-2 left-2 text-xs text-gray-500 bg-white/80 px-2 py-1 rounded">
                   اسحب وأفلت لتعديل المخطط • استخدم خيارات التخصيص لتغيير الألوان والأبعاد
                 </div>
               </div>
