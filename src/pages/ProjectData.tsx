@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,8 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MapPin, Upload, Building, CheckCircle, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { BaldyMap } from "@/components/BaldyMap";
 
 export const ProjectData = () => {
   const [projectData, setProjectData] = useState({
@@ -20,49 +19,7 @@ export const ProjectData = () => {
     files: null as FileList | null
   });
   const [selectedLocation, setSelectedLocation] = useState<[number, number] | null>(null);
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const marker = useRef<mapboxgl.Marker | null>(null);
   const navigate = useNavigate();
-
-  // Initialize map
-  useEffect(() => {
-    if (!mapContainer.current) return;
-
-    // You'll need to add your Mapbox access token
-    mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
-    
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/dark-v11',
-      center: [39.8282, 21.4225], // Saudi Arabia coordinates
-      zoom: 6
-    });
-
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    // Add click handler to set location
-    map.current.on('click', (e) => {
-      const { lng, lat } = e.lngLat;
-      setSelectedLocation([lng, lat]);
-      
-      // Remove existing marker
-      if (marker.current) {
-        marker.current.remove();
-      }
-      
-      // Add new marker
-      marker.current = new mapboxgl.Marker({
-        color: '#8B5CF6'
-      })
-        .setLngLat([lng, lat])
-        .addTo(map.current!);
-    });
-
-    return () => {
-      map.current?.remove();
-    };
-  }, []);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -267,24 +224,11 @@ export const ProjectData = () => {
               </p>
 
               <div className="relative">
-                <div 
-                  ref={mapContainer} 
-                  className="w-full h-64 md:h-80 rounded-lg border border-border/50"
-                  style={{ minHeight: window.innerWidth < 768 ? '256px' : '320px' }}
+                <BaldyMap
+                  onLocationSelect={setSelectedLocation}
+                  selectedLocation={selectedLocation}
+                  className="w-full h-64 md:h-80"
                 />
-                
-                {/* Map Controls */}
-                <div className="absolute top-4 left-4 bg-card border border-border rounded-lg p-2">
-                  <p className="text-xs text-muted-foreground">Mapbox API</p>
-                </div>
-                
-                {selectedLocation && (
-                  <div className="absolute bottom-4 right-4 bg-card border border-border rounded-lg p-2">
-                    <p className="text-xs text-muted-foreground">
-                      {selectedLocation[1].toFixed(4)}, {selectedLocation[0].toFixed(4)}
-                    </p>
-                  </div>
-                )}
               </div>
 
               {/* Location Info */}
