@@ -333,6 +333,27 @@ export const Preview = () => {
             </Card>
           </div>
         </div>
+
+        {/* Final Results Button */}
+        <div className="mt-8 text-center">
+          <Button 
+            onClick={handleFinish}
+            disabled={isFinishing}
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold rounded-lg"
+          >
+            {isFinishing ? (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                جاري تحضير النتائج النهائية...
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-5 h-5" />
+                الحصول على النتيجة النهائية
+              </div>
+            )}
+          </Button>
+        </div>
       </div>
     </div>;
 };
