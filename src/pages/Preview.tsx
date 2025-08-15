@@ -56,31 +56,40 @@ export const Preview = () => {
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = new FabricCanvas(canvasRef.current, {
-      width: 600,
-      height: 400,
+      width: 280,
+      height: 150,
       backgroundColor: "#ffffff"
     });
 
     // Add sample floor plan elements
     const room1 = new Rect({
-      left: 50,
-      top: 50,
+      left: 20,
+      top: 20,
       fill: "rgba(139, 92, 246, 0.3)",
-      width: 150,
-      height: 100,
+      width: 80,
+      height: 50,
       stroke: "#8b5cf6",
-      strokeWidth: 2
+      strokeWidth: 1
     });
     const room2 = new Rect({
-      left: 220,
-      top: 50,
+      left: 120,
+      top: 20,
       fill: "rgba(139, 92, 246, 0.3)",
-      width: 120,
-      height: 100,
+      width: 70,
+      height: 50,
       stroke: "#8b5cf6",
-      strokeWidth: 2
+      strokeWidth: 1
     });
-    canvas.add(room1, room2);
+    const room3 = new Rect({
+      left: 70,
+      top: 80,
+      fill: "rgba(139, 92, 246, 0.3)",
+      width: 100,
+      height: 40,
+      stroke: "#8b5cf6",
+      strokeWidth: 1
+    });
+    canvas.add(room1, room2, room3);
     setFabricCanvas(canvas);
     toast.success("المخطط ثنائي الأبعاد جاهز للتعديل!");
     return () => {
@@ -148,22 +157,22 @@ export const Preview = () => {
         </div>}
 
       {/* Header */}
-      <div className="container mx-auto max-w-7xl px-4 py-4">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 bg-transparent gap-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 order-2 lg:order-1">
-            <Button variant="outline" onClick={() => navigate("/project-data")} className="bg-purple-600 text-white border-purple-500 hover:bg-purple-700 px-4 md:px-6 py-2 text-sm">
+      <div className="px-6 py-4 border-b border-gray-700">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <Button variant="outline" onClick={() => navigate("/project-data")} className="bg-purple-600 text-white border-purple-500 hover:bg-purple-700 px-6 py-2">
               العودة للبيانات
             </Button>
-            <Button onClick={handleFinish} disabled={isFinishing} className="bg-green-600 hover:bg-green-700 text-white px-4 md:px-6 py-2 text-sm">
+            <Button onClick={handleFinish} disabled={isFinishing} className="bg-green-600 hover:bg-green-700 text-white px-6 py-2">
               النتيجة النهائية
             </Button>
           </div>
           
-          <div className="text-right order-1 lg:order-2">
-            <h1 className="text-2xl lg:text-3xl font-bold mb-2 text-white">
+          <div className="text-right">
+            <h1 className="text-3xl font-bold text-white">
               محرر التصميم
             </h1>
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-gray-400 mt-1">
               مشروع المنزل التقليدي - عرض توضيحي - غرض توضيحي
             </p>
           </div>
@@ -171,14 +180,11 @@ export const Preview = () => {
       </div>
 
       {/* Main Layout */}
-      <div className="flex h-[calc(100vh-140px)]">
+      <div className="flex h-[calc(100vh-170px)]">
         {/* Left Sidebar - Customization Options */}
-        <div className="w-80 bg-gray-800 border-r border-gray-700 p-6 overflow-y-auto">
-          <div className="text-center mb-6">
-            <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
-              <Settings className="w-5 h-5" />
-              خيارات التخصيص
-            </h3>
+        <div className="w-72 bg-gray-800 border-r border-gray-700 p-5 overflow-y-auto">
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-white text-center mb-4">خيارات التخصيص</h3>
           </div>
           
           <div className="space-y-6">
@@ -245,83 +251,91 @@ export const Preview = () => {
         </div>
 
         {/* Center - 3D Model Viewer */}
-        <div className="flex-1 bg-gray-800 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold flex items-center gap-2">
-              <RotateCw className="w-5 h-5" />
+        <div className="flex-1 bg-gray-850 p-4">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-base font-medium flex items-center gap-2 text-white">
+              <RotateCw className="w-4 h-4" />
               المعاينة ثلاثية الأبعاد
             </h3>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-400">تكبير 100%</span>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-gray-400">100%</span>
               <div className="flex gap-1">
-                <Button variant="ghost" size="sm" className="p-2">
-                  <RotateCw className="w-4 h-4" />
+                <Button variant="ghost" size="sm" className="p-1.5 text-gray-400 hover:text-white">
+                  <RotateCw className="w-3.5 h-3.5" />
                 </Button>
-                <Button variant="ghost" size="sm" className="p-2">
-                  <Eye className="w-4 h-4" />
+                <Button variant="ghost" size="sm" className="p-1.5 text-gray-400 hover:text-white">
+                  <Eye className="w-3.5 h-3.5" />
                 </Button>
-                <Button variant="ghost" size="sm" className="p-2">
-                  <Download className="w-4 h-4" />
+                <Button variant="ghost" size="sm" className="p-1.5 text-gray-400 hover:text-white">
+                  <Download className="w-3.5 h-3.5" />
                 </Button>
               </div>
             </div>
           </div>
           
-          <div className="bg-gradient-to-br from-blue-900 to-purple-900 rounded-lg h-[calc(100%-60px)] flex items-center justify-center relative">
+          <div className="bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-xl h-[calc(100%-50px)] flex items-center justify-center relative border border-gray-700">
             <Interactive3DViewer modelType="traditional-house" className="w-full h-full" />
             
             {/* Search/AI Button */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-              <Button className="bg-gray-800/90 hover:bg-gray-700 text-white border border-gray-600 px-6 py-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <span>استخدم عجلة الفأرة للتكبير والتصغير</span>
-                </div>
+            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2">
+              <Button className="bg-gray-800/90 hover:bg-gray-700 text-white border border-gray-600 px-4 py-1.5 text-xs">
+                <span>استخدم عجلة الفأرة للتكبير والتصغير</span>
               </Button>
             </div>
           </div>
         </div>
 
         {/* Right Sidebar - 2D Floor Plan and Project Description */}
-        <div className="w-80 bg-gray-800 border-l border-gray-700 p-6 space-y-6">
+        <div className="w-80 bg-gray-800 border-l border-gray-700 p-5 space-y-4">
           {/* 2D Floor Plan */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-semibold flex items-center gap-2">
-                <Grid3X3 className="w-4 h-4" />
+              <h4 className="text-sm font-medium flex items-center gap-2 text-white">
+                <Grid3X3 className="w-3.5 h-3.5" />
                 المعاينة ثنائية الأبعاد
               </h4>
-              <Button variant="ghost" size="sm" className="text-purple-400 hover:bg-purple-900/20 text-xs">
-                تحديث
-              </Button>
+              <div className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs">
+                النتيجة النهائية
+              </div>
             </div>
             
-            <div className="bg-white rounded-lg h-48 relative">
-              <canvas ref={canvasRef} className="w-full h-full rounded-lg" style={{
-                border: "1px solid #e2e8f0",
-                width: "100%",
-                height: "100%"
-              }} />
+            <div className="bg-white rounded-lg h-40 relative border border-gray-600">
+              <canvas 
+                ref={canvasRef} 
+                className="w-full h-full rounded-lg" 
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%"
+                }} 
+              />
             </div>
           </div>
 
           {/* Project Description */}
-          <div>
-            <h4 className="text-sm font-semibold mb-3">وصف المشروع</h4>
+          <div className="bg-gray-750 rounded-lg p-4 border border-gray-700">
+            <h4 className="text-sm font-medium mb-3 text-white">وصف المشروع</h4>
             
-            <div className="space-y-3 text-xs text-gray-300">
-              <div>
-                <span className="text-gray-400">النوع:</span>
-                <span className="block mt-1">{project?.content?.split(' ').slice(0, 3).join(' ') || "منزل تقليدي من طابقين"}</span>
+            <div className="space-y-3 text-xs">
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="bg-gray-700 rounded p-2">
+                  <div className="text-gray-400 text-xs">النوع</div>
+                  <div className="text-white text-xs mt-1">منزل</div>
+                </div>
+                <div className="bg-gray-700 rounded p-2">
+                  <div className="text-gray-400 text-xs">النوع</div>
+                  <div className="text-white text-xs mt-1">الرياض</div>
+                </div>
+                <div className="bg-gray-700 rounded p-2">
+                  <div className="text-gray-400 text-xs">الموقع</div>
+                  <div className="text-white text-xs mt-1">السعودية</div>
+                </div>
               </div>
               
-              <div>
-                <span className="text-gray-400">الموقع:</span>
-                <span className="block mt-1">الرياض</span>
-              </div>
-              
-              <div>
-                <span className="text-gray-400">الوصف المفصل:</span>
-                <span className="block mt-1 leading-relaxed">{project?.content || "منزل تقليدي من طابقين من الطوب الطيني مع ثلاث غرف نوم ومدخل شرقي وفناء مركزي ونوافذ خشبية مزخرفة"}</span>
+              <div className="bg-gray-700 rounded p-3">
+                <div className="text-gray-400 text-xs mb-2">الوصف المفصل</div>
+                <div className="text-gray-300 text-xs leading-relaxed">
+                  {project?.content || "منزل تقليدي من طابقين من الطوب الطيني مع ثلاث غرف نوم ومدخل شرقي وفناء مركزي ونوافذ خشبية مزخرفة"}
+                </div>
               </div>
             </div>
           </div>
