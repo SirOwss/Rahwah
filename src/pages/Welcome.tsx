@@ -44,17 +44,17 @@ export const Welcome = () => {
     <div className="min-h-screen pt-16">
       {/* Hero Section */}
       <section 
-        className="relative py-32 px-4 overflow-hidden flex items-center min-h-[80vh]"
+        className="relative py-16 md:py-32 px-4 overflow-hidden flex items-center min-h-[80vh]"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(/lovable-uploads/a31fb680-7af0-4bd6-b75b-f0b873c32474.png)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          backgroundAttachment: window.innerWidth > 768 ? 'fixed' : 'scroll'
         }}
       >
         <div className="container mx-auto max-w-4xl text-center relative z-10">
           <div className="animate-fade-in-up">
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-8 leading-tight hero-text">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 leading-tight hero-text px-2">
               <span className="text-foreground">رهوة</span>
               <br />
               <span className="text-white">
@@ -62,26 +62,26 @@ export const Welcome = () => {
               </span>
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed px-4">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-4">
               حوّل أفكارك المعمارية إلى نماذج ثلاثية الأبعاد ومخططات هندسية احترافية 
-              <br />
+              <br className="hidden sm:block" />
               <span className="text-muted-foreground font-semibold">بجملة واحدة أو صورة واحدة</span>
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center items-center px-4">
               <Button 
                 size="lg" 
-                className="btn-primary px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl font-bold shadow-2xl mobile-touch w-full sm:w-auto"
+                className="btn-primary px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-6 text-base sm:text-lg md:text-xl font-bold shadow-2xl mobile-touch w-full sm:w-auto"
                 onClick={() => navigate("/project-data")}
               >
                 ابدأ مشروعك الآن
-                <ArrowRight className="w-5 sm:w-6 h-5 sm:h-6 mr-3" />
+                <ArrowRight className="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6 mr-2 sm:mr-3" />
               </Button>
               
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="px-8 sm:px-10 py-4 sm:py-6 text-lg sm:text-xl border-2 border-white/30 text-white hover:bg-white hover:text-black mobile-touch w-full sm:w-auto"
+                className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-6 text-base sm:text-lg md:text-xl border-2 border-white/30 text-white hover:bg-white hover:text-black mobile-touch w-full sm:w-auto"
                 onClick={() => navigate("/project-data")}
               >
                 جرب مجاناً
@@ -92,27 +92,27 @@ export const Welcome = () => {
       </section>
 
       {/* Info Section */}
-      <section className="py-20 px-4 bg-card/30">
+      <section className="py-12 md:py-20 px-4 bg-card/30">
         <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6 px-2">
               لماذا رهوة هو الخيار الأمثل؟
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-4">
               منصة متطورة تجمع بين قوة الذكاء الاصطناعي وخبرة الهندسة المعمارية لتقدم لك حلول شاملة ومبتكرة
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <Card key={index} className="p-8 bg-card border-border/50 card-hover group">
-                  <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-all duration-300">
-                    <Icon className="w-8 h-8 text-primary" />
+                <Card key={index} className="p-6 md:p-8 bg-card border-border/50 card-hover group">
+                  <div className="w-12 md:w-16 h-12 md:h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:bg-primary/20 transition-all duration-300">
+                    <Icon className="w-6 md:w-8 h-6 md:h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4 text-center">{feature.title}</h3>
-                  <p className="text-muted-foreground text-center leading-relaxed">{feature.description}</p>
+                  <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 text-center px-2">{feature.title}</h3>
+                  <p className="text-sm md:text-base text-muted-foreground text-center leading-relaxed">{feature.description}</p>
                 </Card>
               );
             })}
@@ -121,21 +121,21 @@ export const Welcome = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-primary/10 via-warning/5 to-primary/10">
+      <section className="py-12 md:py-20 px-4 bg-gradient-to-r from-primary/10 via-warning/5 to-primary/10">
         <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 px-2">
             جاهز لتحويل رؤيتك إلى واقع؟
           </h2>
-          <p className="text-xl text-muted-foreground mb-10">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-10 px-4">
             انضم إلى آلاف المعماريين والمطورين الذين يثقون برهوة
           </p>
           <Button 
             size="lg" 
-            className="btn-primary px-12 py-6 text-xl font-bold shadow-2xl"
+            className="btn-primary px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 text-lg sm:text-xl font-bold shadow-2xl mobile-touch"
             onClick={() => navigate("/project-data")}
           >
             ابدأ الآن - مجاناً
-            <ArrowRight className="w-6 h-6 mr-3" />
+            <ArrowRight className="w-5 md:w-6 h-5 md:h-6 mr-2 md:mr-3" />
           </Button>
         </div>
       </section>

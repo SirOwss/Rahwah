@@ -94,38 +94,38 @@ export const ProjectData = () => {
 
   return (
     <div className="min-h-screen pt-16 bg-background">
-      <div className="container mx-auto max-w-7xl px-4 py-8">
+      <div className="container mx-auto max-w-7xl px-4 py-6 md:py-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary font-semibold mb-4">
-            <Building className="w-4 h-4" />
+        <div className="text-center mb-6 md:mb-8">
+          <div className="inline-flex items-center gap-2 px-3 md:px-4 py-2 bg-primary/10 rounded-full text-primary font-semibold mb-3 md:mb-4 text-sm md:text-base">
+            <Building className="w-3 md:w-4 h-3 md:h-4" />
             محرر التصميم - مشروع المنزل التقليدي - عرض توضيحي
           </div>
           
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-4 md:mb-6 gap-4">
             <Button 
               variant="ghost" 
               onClick={() => navigate(-1)}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground order-2 sm:order-1"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               العودة للخلف
             </Button>
             
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="sm">
+            <div className="flex items-center gap-2 md:gap-4 order-1 sm:order-2">
+              <Button variant="outline" size="sm" className="text-xs md:text-sm">
                 قيد التحرير
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="text-xs md:text-sm">
                 عرض 3D 2D
               </Button>
             </div>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
           {/* Project Data Form */}
-          <Card className="p-8 bg-card border-border/50">
+          <Card className="p-4 sm:p-6 md:p-8 bg-card border-border/50">
             <div className="space-y-6">
               <div className="flex items-center gap-2 mb-6">
                 <CheckCircle className="w-5 h-5 text-primary" />
@@ -250,27 +250,27 @@ export const ProjectData = () => {
           </Card>
 
           {/* Map Section */}
-          <Card className="p-6 bg-card border-border/50">
+          <Card className="p-4 sm:p-6 bg-card border-border/50">
             <div className="space-y-4">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 md:mb-4 gap-2">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-primary" />
-                  <h3 className="font-semibold">تحديد الموقع</h3>
+                  <MapPin className="w-4 md:w-5 h-4 md:h-5 text-primary" />
+                  <h3 className="text-sm md:text-base font-semibold">تحديد الموقع</h3>
                 </div>
                 <div className="text-xs text-muted-foreground">
                   المعاينة ثلاثية الأبعاد
                 </div>
               </div>
 
-              <p className="text-sm text-muted-foreground mb-4">
+              <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
                 انقر على الخريطة لتحديد موقع المشروع
               </p>
 
               <div className="relative">
                 <div 
                   ref={mapContainer} 
-                  className="w-full h-80 rounded-lg border border-border/50"
-                  style={{ minHeight: '320px' }}
+                  className="w-full h-64 md:h-80 rounded-lg border border-border/50"
+                  style={{ minHeight: window.innerWidth < 768 ? '256px' : '320px' }}
                 />
                 
                 {/* Map Controls */}

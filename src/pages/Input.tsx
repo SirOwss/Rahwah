@@ -86,18 +86,18 @@ export const Input = () => {
 
   return (
     <div className="min-h-screen pt-16">
-      <div className="container mx-auto max-w-5xl px-4 py-8 md:py-12">
+      <div className="container mx-auto max-w-5xl px-4 py-6 md:py-8 lg:py-12">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary font-semibold mb-6">
-            <Sparkles className="w-4 h-4" />
+        <div className="text-center mb-8 md:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 md:px-4 py-2 bg-primary/10 rounded-full text-primary font-semibold mb-4 md:mb-6 text-sm md:text-base">
+            <Sparkles className="w-3 md:w-4 h-3 md:h-4" />
             {inputType === "prompt" ? "إدخال وصف نصي" : "رفع الملفات"}
           </div>
           
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 px-2">
             {inputType === "prompt" ? "صف مشروعك بالتفصيل" : "ارفع صور أو مقاطع فيديو"}
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground px-4">
+          <p className="text-base md:text-lg lg:text-xl text-muted-foreground px-4">
             {inputType === "prompt" 
               ? "كلما كان الوصف أكثر تفصيلاً، كانت النتائج أدق وأفضل" 
               : "تأكد من جودة ووضوح الملفات المرفوعة للحصول على أفضل النتائج"
@@ -106,50 +106,50 @@ export const Input = () => {
         </div>
 
         {/* Input Type Selection */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-6 md:mb-8 justify-center">
           <Button
             variant={inputType === "prompt" ? "default" : "outline"}
             size="lg"
             onClick={() => setInputType("prompt")}
-            className="px-8 py-4"
+            className="px-6 md:px-8 py-3 md:py-4 mobile-touch"
           >
-            <MessageSquare className="w-5 h-5 mr-2" />
+            <MessageSquare className="w-4 md:w-5 h-4 md:h-5 mr-2" />
             وصف نصي
           </Button>
           <Button
             variant={inputType === "upload" ? "default" : "outline"}
             size="lg"
             onClick={() => setInputType("upload")}
-            className="px-8 py-4"
+            className="px-6 md:px-8 py-3 md:py-4 mobile-touch"
           >
-            <Upload className="w-5 h-5 mr-2" />
+            <Upload className="w-4 md:w-5 h-4 md:h-5 mr-2" />
             رفع ملفات
           </Button>
         </div>
 
         {/* Input Content */}
-        <Card className="p-8 bg-card border-border/50">
+        <Card className="p-4 sm:p-6 md:p-8 bg-card border-border/50">
           {inputType === "prompt" ? (
             <div className="space-y-6">
               <div>
-                <label className="block text-lg font-semibold mb-4">
+                <label className="block text-base md:text-lg font-semibold mb-3 md:mb-4">
                   صف المبنى أو التصميم المطلوب
                 </label>
                 <Textarea
                   placeholder="مثال: منزل تقليدي من طابقين..."
                   value={promptText}
                   onChange={(e) => setPromptText(e.target.value)}
-                  className="min-h-32 text-lg bg-input border-border"
+                  className="min-h-24 md:min-h-32 text-base md:text-lg bg-input border-border"
                   dir="rtl"
                 />
               </div>
 
               {/* File Upload for Prompt */}
               <div>
-                <label className="block text-lg font-semibold mb-4">
+                <label className="block text-base md:text-lg font-semibold mb-3 md:mb-4">
                   ارفع ملفات مرجعية (اختياري)
                 </label>
-                <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
+                <div className="border-2 border-dashed border-border rounded-lg p-4 md:p-8 text-center hover:border-primary/50 transition-colors">
                   <input
                     type="file"
                     multiple
@@ -159,8 +159,8 @@ export const Input = () => {
                     id="file-upload-prompt"
                   />
                   <label htmlFor="file-upload-prompt" className="cursor-pointer">
-                    <Camera className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
-                    <p className="text-sm mb-2">أضف صور أو ملفات مرجعية للتصميم</p>
+                    <Camera className="w-6 md:w-8 h-6 md:h-8 text-muted-foreground mx-auto mb-2 md:mb-3" />
+                    <p className="text-sm mb-1 md:mb-2">أضف صور أو ملفات مرجعية للتصميم</p>
                     <p className="text-xs text-muted-foreground">
                       يدعم: الصور، الفيديو، PDF، مستندات، مخططات CAD (DWG, DXF)، نماذج 3D
                     </p>
@@ -212,10 +212,10 @@ export const Input = () => {
           ) : (
             <div className="space-y-6">
               <div>
-                <label className="block text-lg font-semibold mb-4">
+                <label className="block text-base md:text-lg font-semibold mb-3 md:mb-4">
                   ارفع صور أو مقاطع فيديو للمبنى
                 </label>
-                <div className="border-2 border-dashed border-border rounded-lg p-12 text-center hover:border-primary/50 transition-colors">
+                <div className="border-2 border-dashed border-border rounded-lg p-6 md:p-12 text-center hover:border-primary/50 transition-colors">
                   <input
                     type="file"
                     multiple
@@ -225,8 +225,8 @@ export const Input = () => {
                     id="file-upload"
                   />
                   <label htmlFor="file-upload" className="cursor-pointer">
-                    <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-lg mb-2">اسحب الملفات هنا أو انقر للاختيار</p>
+                    <Upload className="w-8 md:w-12 h-8 md:h-12 text-muted-foreground mx-auto mb-3 md:mb-4" />
+                    <p className="text-base md:text-lg mb-2">اسحب الملفات هنا أو انقر للاختيار</p>
                     <p className="text-sm text-muted-foreground">
                       يدعم جميع صيغ الصور، الفيديو، PDF، مستندات، مخططات CAD، نماذج 3D
                     </p>
@@ -259,26 +259,26 @@ export const Input = () => {
           )}
 
           {/* Submit Button */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-6 md:mt-8 flex justify-center">
             <Button
               size="lg"
               onClick={handleSubmit}
-              className="btn-primary px-8 py-4 text-lg font-semibold"
+              className="btn-primary px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold mobile-touch w-full sm:w-auto"
               disabled={!promptText.trim() && !uploadedFiles}
             >
-              <Send className="w-5 h-5 mr-2" />
+              <Send className="w-4 md:w-5 h-4 md:h-5 mr-2" />
               إنشاء المخططات
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <ArrowRight className="w-4 md:w-5 h-4 md:h-5 ml-2" />
             </Button>
           </div>
         </Card>
 
         {/* Info Cards */}
-        <div className="grid sm:grid-cols-2 gap-6 mt-12">
-          <Card className="p-6 bg-card border-border/50">
-            <FileText className="w-8 h-8 text-primary mb-4" />
-            <h3 className="text-lg font-semibold mb-2">ما ستحصل عليه</h3>
-            <ul className="text-sm text-muted-foreground space-y-1">
+        <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mt-8 md:mt-12">
+          <Card className="p-4 md:p-6 bg-card border-border/50">
+            <FileText className="w-6 md:w-8 h-6 md:h-8 text-primary mb-3 md:mb-4" />
+            <h3 className="text-base md:text-lg font-semibold mb-2">ما ستحصل عليه</h3>
+            <ul className="text-xs md:text-sm text-muted-foreground space-y-1">
               <li>• نموذج ثلاثي الأبعاد تفاعلي</li>
               <li>• مخططات الطوابق</li>
               <li>• المساقط الجانبية</li>
@@ -286,10 +286,10 @@ export const Input = () => {
             </ul>
           </Card>
 
-          <Card className="p-6 bg-card border-border/50">
-            <Upload className="w-8 h-8 text-success mb-4" />
-            <h3 className="text-lg font-semibold mb-2">تنسيقات التصدير</h3>
-            <ul className="text-sm text-muted-foreground space-y-1">
+          <Card className="p-4 md:p-6 bg-card border-border/50">
+            <Upload className="w-6 md:w-8 h-6 md:h-8 text-success mb-3 md:mb-4" />
+            <h3 className="text-base md:text-lg font-semibold mb-2">تنسيقات التصدير</h3>
+            <ul className="text-xs md:text-sm text-muted-foreground space-y-1">
               <li>• AutoCAD (.DWG)</li>
               <li>• مستندات PDF</li>
               <li>• ملفات DXF</li>

@@ -111,31 +111,31 @@ export const History = () => {
 
   return (
     <div className="min-h-screen pt-16">
-      <div className="container mx-auto max-w-6xl px-4 py-8 md:py-12">
+      <div className="container mx-auto max-w-6xl px-4 py-6 md:py-8 lg:py-12">
         {/* Header */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 md:mb-8 gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 px-2">
               مشاريعي
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
+            <p className="text-base md:text-lg lg:text-xl text-muted-foreground px-2">
               جميع مشاريعك المعمارية في مكان واحد
             </p>
           </div>
           
           <Button 
             size="lg" 
-            className="btn-primary px-6 mobile-touch"
+            className="btn-primary px-4 md:px-6 mobile-touch w-full lg:w-auto"
             onClick={() => navigate("/input")}
           >
-            <Plus className="w-5 h-5 mr-2" />
+            <Plus className="w-4 md:w-5 h-4 md:h-5 mr-2" />
             مشروع جديد
           </Button>
         </div>
 
         {/* Search and Filters */}
-        <Card className="p-6 mb-8 bg-card border-border/50">
-          <div className="flex flex-col md:flex-row gap-4">
+        <Card className="p-4 md:p-6 mb-6 md:mb-8 bg-card border-border/50">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4">
             <div className="relative flex-1">
               <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <Input
@@ -147,12 +147,12 @@ export const History = () => {
               />
             </div>
             
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <Button
                 variant={filterStatus === "all" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setFilterStatus("all")}
-                className="px-4"
+                className="px-3 md:px-4 text-sm"
               >
                 الكل
               </Button>
@@ -160,7 +160,7 @@ export const History = () => {
                 variant={filterStatus === "completed" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setFilterStatus("completed")}
-                className="px-4"
+                className="px-3 md:px-4 text-sm"
               >
                 مكتمل
               </Button>
@@ -168,7 +168,7 @@ export const History = () => {
                 variant={filterStatus === "processing" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setFilterStatus("processing")}
-                className="px-4"
+                className="px-3 md:px-4 text-sm"
               >
                 قيد المعالجة
               </Button>
@@ -178,27 +178,27 @@ export const History = () => {
 
         {/* Projects Grid */}
         {filteredProjects.length === 0 ? (
-          <Card className="p-12 text-center bg-card border-border/50">
-            <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center mx-auto mb-4">
-              <Calendar className="w-8 h-8 text-muted-foreground" />
+          <Card className="p-8 md:p-12 text-center bg-card border-border/50">
+            <div className="w-12 md:w-16 h-12 md:h-16 bg-muted rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Calendar className="w-6 md:w-8 h-6 md:h-8 text-muted-foreground" />
             </div>
-            <h3 className="text-lg font-semibold mb-2">لا توجد مشاريع</h3>
-            <p className="text-muted-foreground mb-4">
+            <h3 className="text-base md:text-lg font-semibold mb-2">لا توجد مشاريع</h3>
+            <p className="text-sm md:text-base text-muted-foreground mb-4">
               {searchQuery ? "لا توجد مشاريع تطابق البحث" : "ابدأ مشروعك الأول الآن"}
             </p>
-            <Button onClick={() => navigate("/input")} className="btn-primary">
+            <Button onClick={() => navigate("/input")} className="btn-primary mobile-touch">
               <Plus className="w-4 h-4 mr-2" />
               إنشاء مشروع جديد
             </Button>
           </Card>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {filteredProjects.map((project) => (
-              <Card key={project.id} className="p-6 bg-card border-border/50 card-hover">
-                <div className="flex justify-between items-start mb-4">
+              <Card key={project.id} className="p-4 md:p-6 bg-card border-border/50 card-hover">
+                <div className="flex justify-between items-start mb-3 md:mb-4">
                   <div>
-                    <h3 className="text-lg font-semibold mb-1">{project.title}</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <h3 className="text-base md:text-lg font-semibold mb-1 line-clamp-1">{project.title}</h3>
+                    <p className="text-xs md:text-sm text-muted-foreground">
                       {getTypeLabel(project.type)}
                     </p>
                   </div>
@@ -206,14 +206,14 @@ export const History = () => {
                 </div>
 
                 {project.content && (
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                  <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4 line-clamp-2">
                     {project.content}
                   </p>
                 )}
 
-                <div className="flex justify-between items-center text-xs text-muted-foreground mb-4">
+                <div className="flex justify-between items-center text-xs text-muted-foreground mb-3 md:mb-4">
                   <span>{new Date(project.timestamp).toLocaleDateString('ar-SA')}</span>
-                  <span>{new Date(project.timestamp).toLocaleTimeString('ar-SA', { 
+                  <span className="hidden sm:inline">{new Date(project.timestamp).toLocaleTimeString('ar-SA', { 
                     hour: '2-digit', 
                     minute: '2-digit' 
                   })}</span>
@@ -222,11 +222,11 @@ export const History = () => {
                 <div className="flex gap-2">
                   <Button
                     size="sm"
-                    className="flex-1"
+                    className="flex-1 text-xs md:text-sm mobile-touch"
                     onClick={() => handleViewProject(project)}
                     disabled={project.status === "processing"}
                   >
-                    <Eye className="w-4 h-4 mr-1" />
+                    <Eye className="w-3 md:w-4 h-3 md:h-4 mr-1" />
                     عرض
                   </Button>
                   
@@ -234,22 +234,23 @@ export const History = () => {
                     <Button
                       size="sm"
                       variant="outline"
+                      className="mobile-touch"
                       onClick={() => {
                         handleViewProject(project);
                         toast.success("جاري التحميل...");
                       }}
                     >
-                      <Download className="w-4 h-4" />
+                      <Download className="w-3 md:w-4 h-3 md:h-4" />
                     </Button>
                   )}
                   
                   <Button
                     size="sm"
                     variant="outline"
+                    className="text-destructive hover:text-destructive mobile-touch"
                     onClick={() => handleDeleteProject(project.id)}
-                    className="text-destructive hover:text-destructive"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3 md:w-4 h-3 md:h-4" />
                   </Button>
                 </div>
               </Card>
