@@ -1,0 +1,15 @@
+{
+  "functions": {
+    "api/generate-3d.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "npm install --production=false",
+  "env": {
+    "NODE_OPTIONS": "--max-old-space-size=4096"
+  },
+  "regions": ["iad1"]
+} 

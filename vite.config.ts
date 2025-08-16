@@ -19,4 +19,17 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      external: [],
+      output: {
+        manualChunks: undefined
+      }
+    },
+    target: 'es2020',
+    minify: 'esbuild'
+  },
+  optimizeDeps: {
+    exclude: ['@fal-ai/client']
+  }
 }));
