@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
@@ -40,6 +41,7 @@ import { Interactive3DViewer } from "@/components/Interactive3DViewer";
 export const FinalResults = () => {
   const [project, setProject] = useState<any>(null);
   const [activeTab, setActiveTab] = useState("النتائج");
+  const [showDetailedReport, setShowDetailedReport] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -83,6 +85,40 @@ export const FinalResults = () => {
     window.print();
   };
 
+  const handlePrintDetailedReport = () => {
+    const printContent = document.getElementById('detailed-report-content');
+    if (printContent) {
+      const printWindow = window.open('', '_blank');
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>التقرير المفصل - ${project?.title || 'مشروع معماري'}</title>
+              <style>
+                body { font-family: 'Arial', sans-serif; direction: rtl; text-align: right; margin: 40px; }
+                .header { text-align: center; margin-bottom: 30px; }
+                .section { margin-bottom: 30px; page-break-inside: avoid; }
+                .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+                .card { border: 1px solid #ddd; padding: 15px; border-radius: 8px; }
+                table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: right; }
+                th { background-color: #f5f5f5; }
+                .stats { display: flex; justify-content: space-around; margin: 20px 0; }
+                .stat-item { text-align: center; }
+                @media print { body { margin: 20px; } }
+              </style>
+            </head>
+            <body>
+              ${printContent.innerHTML}
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+      }
+    }
+  };
+
   if (!project) {
     return (
       <div className="min-h-screen pt-16 flex items-center justify-center">
@@ -119,6 +155,398 @@ export const FinalResults = () => {
               <Button variant="outline" size="sm" onClick={saveToHistory}>
                 حفظ في التاريخ
               </Button>
+              <Dialog open={showDetailedReport} onOpenChange={setShowDetailedReport}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <FileText className="w-4 h-4 mr-2" />
+                    التقرير المفصل
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle className="text-right">التقرير المعماري المفصل</DialogTitle>
+                  </DialogHeader>
+                  
+                  <div id="detailed-report-content" className="space-y-8 p-6">
+                    {/* Cover Page */}
+                    <div className="text-center space-y-6 border-b pb-8">
+                      <div className="space-y-2">
+                        <h1 className="text-4xl font-bold text-primary leading-tight">
+                          تقرير تصميم مبنى ثلاثي الأبعاد
+                        </h1>
+                        <p className="text-xl text-muted-foreground">مدفوع بالذكاء الاصطناعي</p>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-8 mt-12 text-right">
+                        <div className="space-y-4">
+                          <div>
+                            <span className="text-base text-muted-foreground">اسم المشروع:</span>
+                            <p className="font-semibold text-lg">{project?.title || "منزل تقليدي بفناء مركزي"}</p>
+                          </div>
+                          <div>
+                            <span className="text-base text-muted-foreground">العميل:</span>
+                            <p className="font-semibold">العميل الكريم</p>
+                          </div>
+                          <div>
+                            <span className="text-base text-muted-foreground">الموقع:</span>
+                            <p className="font-semibold">الرياض، المملكة العربية السعودية</p>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-4">
+                          <div>
+                            <span className="text-base text-muted-foreground">المصمم/النظام:</span>
+                            <p className="font-semibold flex items-center gap-2">
+                              <Bot className="w-4 h-4" />
+                              نظام الذكاء الاصطناعي المعماري
+                            </p>
+                          </div>
+                          <div>
+                            <span className="text-base text-muted-foreground">التاريخ:</span>
+                            <p className="font-semibold">{new Date().toLocaleDateString('ar-SA')}</p>
+                          </div>
+                          <div>
+                            <span className="text-base text-muted-foreground">رقم الإصدار:</span>
+                            <p className="font-semibold">v1.0</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Executive Summary */}
+                    <div className="space-y-6">
+                      <h2 className="text-2xl font-bold text-primary flex items-center gap-2">
+                        <Info className="w-6 h-6" />
+                        الملخص التنفيذي
+                      </h2>
+                      
+                      <div className="grid grid-cols-3 gap-6">
+                        <div className="bg-primary/5 p-4 rounded-lg text-center">
+                          <h3 className="font-semibold text-primary mb-2">مساحة الموقع الإجمالية</h3>
+                          <p className="text-2xl font-bold">500 م²</p>
+                        </div>
+                        <div className="bg-primary/5 p-4 rounded-lg text-center">
+                          <h3 className="font-semibold text-primary mb-2">المساحة البنائية</h3>
+                          <p className="text-2xl font-bold">250 م²</p>
+                        </div>
+                        <div className="bg-primary/5 p-4 rounded-lg text-center">
+                          <h3 className="font-semibold text-primary mb-2">عدد الطوابق</h3>
+                          <p className="text-2xl font-bold">طابق واحد</p>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <h3 className="font-semibold">وصف موجز للمشروع:</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          منزل تقليدي بفناء مركزي يجمع بين الطراز المعماري التراثي والتطبيقات العصرية. 
+                          يتميز التصميم بالفناء المركزي الذي يوفر الإضاءة الطبيعية والتهوية الطبيعية لجميع أجزاء المنزل.
+                          تم تصميم المشروع باستخدام تقنيات الذكاء الاصطناعي المتقدمة لضمان الدقة والكفاءة في التصميم.
+                        </p>
+                        
+                        <div className="grid grid-cols-2 gap-6 mt-6">
+                          <div>
+                            <h4 className="font-medium mb-2">المؤشرات الرئيسية:</h4>
+                            <ul className="space-y-1 text-sm text-muted-foreground">
+                              <li>• نسبة التغطية: 50%</li>
+                              <li>• معامل الكثافة: 0.5</li>
+                              <li>• السعة التصميمية: 6-8 أشخاص</li>
+                              <li>• عدد المواقف: 2 موقف</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <h4 className="font-medium mb-2">التقدير المبدئي للتكلفة:</h4>
+                            <div className="bg-muted/30 p-3 rounded-lg">
+                              <p className="text-lg font-bold text-primary">450,000 ريال سعودي</p>
+                              <p className="text-xs text-muted-foreground mt-1">شامل المواد والعمالة</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Technical Specifications */}
+                    <div className="space-y-6">
+                      <h2 className="text-2xl font-bold text-primary flex items-center gap-2">
+                        <Settings className="w-6 h-6" />
+                        المواصفات التقنية المفصلة
+                      </h2>
+                      
+                      <div className="grid grid-cols-2 gap-6">
+                        <div>
+                          <h3 className="font-semibold mb-3">المواد الإنشائية:</h3>
+                          <Table>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell className="font-medium">الأساسات</TableCell>
+                                <TableCell>خرسانة مسلحة C30</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell className="font-medium">الجدران</TableCell>
+                                <TableCell>بلوك خرساني 20سم</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell className="font-medium">الأسقف</TableCell>
+                                <TableCell>خرسانة مسلحة 20سم</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell className="font-medium">التشطيبات</TableCell>
+                                <TableCell>حجر طبيعي وجبس</TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </div>
+                        
+                        <div>
+                          <h3 className="font-semibold mb-3">الأنظمة الكهربائية والميكانيكية:</h3>
+                          <Table>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell className="font-medium">التكييف</TableCell>
+                                <TableCell>مركزي مع تحكم ذكي</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell className="font-medium">الإضاءة</TableCell>
+                                <TableCell>LED موفرة للطاقة</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell className="font-medium">السباكة</TableCell>
+                                <TableCell>أنابيب PPR عالية الجودة</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell className="font-medium">الأمان</TableCell>
+                                <TableCell>نظام إنذار حريق متطور</TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Sustainability Features */}
+                    <div className="space-y-6">
+                      <h2 className="text-2xl font-bold text-primary">ميزات الاستدامة والبيئة</h2>
+                      
+                      <div className="grid grid-cols-3 gap-6">
+                        <Card>
+                          <CardHeader>
+                            <CardTitle className="text-lg">كفاءة الطاقة</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <ul className="space-y-2 text-sm">
+                              <li>• عزل حراري متقدم</li>
+                              <li>• نوافذ مزدوجة الزجاج</li>
+                              <li>• إضاءة LED ذكية</li>
+                              <li>• تكييف عالي الكفاءة</li>
+                            </ul>
+                          </CardContent>
+                        </Card>
+                        
+                        <Card>
+                          <CardHeader>
+                            <CardTitle className="text-lg">إدارة المياه</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <ul className="space-y-2 text-sm">
+                              <li>• تجميع مياه الأمطار</li>
+                              <li>• نظام ري ذكي</li>
+                              <li>• صنابير موفرة للمياه</li>
+                              <li>• معالجة المياه الرمادية</li>
+                            </ul>
+                          </CardContent>
+                        </Card>
+                        
+                        <Card>
+                          <CardHeader>
+                            <CardTitle className="text-lg">الطاقة المتجددة</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <ul className="space-y-2 text-sm">
+                              <li>• ألواح شمسية على السطح</li>
+                              <li>• سخانات مياه شمسية</li>
+                              <li>• إضاءة خارجية بالطاقة الشمسية</li>
+                              <li>• نظام تخزين طاقة</li>
+                            </ul>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </div>
+
+                    {/* Financial Analysis */}
+                    <div className="space-y-6">
+                      <h2 className="text-2xl font-bold text-primary flex items-center gap-2">
+                        <Calculator className="w-6 h-6" />
+                        التحليل المالي المفصل
+                      </h2>
+                      
+                      <div className="grid grid-cols-2 gap-6">
+                        <Card>
+                          <CardHeader>
+                            <CardTitle>تفصيل التكاليف</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <Table>
+                              <TableBody>
+                                <TableRow>
+                                  <TableCell className="font-medium">الأعمال الإنشائية</TableCell>
+                                  <TableCell>200,000 ريال</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell className="font-medium">التشطيبات</TableCell>
+                                  <TableCell>150,000 ريال</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell className="font-medium">الأنظمة الكهربائية</TableCell>
+                                  <TableCell>50,000 ريال</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell className="font-medium">السباكة والتكييف</TableCell>
+                                  <TableCell>50,000 ريال</TableCell>
+                                </TableRow>
+                                <TableRow className="bg-primary/10">
+                                  <TableCell className="font-bold">المجموع</TableCell>
+                                  <TableCell className="font-bold">450,000 ريال</TableCell>
+                                </TableRow>
+                              </TableBody>
+                            </Table>
+                          </CardContent>
+                        </Card>
+                        
+                        <Card>
+                          <CardHeader>
+                            <CardTitle>جدولة الدفعات المقترحة</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <Table>
+                              <TableBody>
+                                <TableRow>
+                                  <TableCell className="font-medium">دفعة التعاقد</TableCell>
+                                  <TableCell>90,000 ريال (20%)</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell className="font-medium">بداية الأعمال</TableCell>
+                                  <TableCell>135,000 ريال (30%)</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell className="font-medium">منتصف التنفيذ</TableCell>
+                                  <TableCell>135,000 ريال (30%)</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell className="font-medium">عند التسليم</TableCell>
+                                  <TableCell>90,000 ريال (20%)</TableCell>
+                                </TableRow>
+                              </TableBody>
+                            </Table>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    </div>
+
+                    {/* Safety and Compliance */}
+                    <div className="space-y-6">
+                      <h2 className="text-2xl font-bold text-primary">السلامة والامتثال التنظيمي</h2>
+                      
+                      <div className="grid grid-cols-2 gap-6">
+                        <div>
+                          <h3 className="font-semibold mb-3">معايير السلامة:</h3>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-success" />
+                              مخارج طوارئ متعددة
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-success" />
+                              نظام إنذار حريق متطور
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-success" />
+                              مواد بناء مقاومة للحريق
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-success" />
+                              إضاءة طوارئ تلقائية
+                            </li>
+                          </ul>
+                        </div>
+                        
+                        <div>
+                          <h3 className="font-semibold mb-3">الامتثال التنظيمي:</h3>
+                          <ul className="space-y-2 text-sm">
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-success" />
+                              كود البناء السعودي
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-success" />
+                              معايير الدفاع المدني
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-success" />
+                              لوائح البلدية المحلية
+                            </li>
+                            <li className="flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-success" />
+                              معايير كفاءة الطاقة
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Digital Deliverables */}
+                    <div className="space-y-6">
+                      <h2 className="text-2xl font-bold text-primary">المخرجات الرقمية</h2>
+                      
+                      <div className="grid grid-cols-3 gap-4">
+                        <Card className="text-center p-4">
+                          <Layers className="w-8 h-8 mx-auto mb-2 text-primary" />
+                          <h4 className="font-semibold">ملفات AutoCAD</h4>
+                          <p className="text-sm text-muted-foreground">مخططات تنفيذية شاملة</p>
+                        </Card>
+                        
+                        <Card className="text-center p-4">
+                          <Building2 className="w-8 h-8 mx-auto mb-2 text-primary" />
+                          <h4 className="font-semibold">نماذج ثلاثية الأبعاد</h4>
+                          <p className="text-sm text-muted-foreground">عروض تفاعلية متقدمة</p>
+                        </Card>
+                        
+                        <Card className="text-center p-4">
+                          <FileText className="w-8 h-8 mx-auto mb-2 text-primary" />
+                          <h4 className="font-semibold">تقارير PDF</h4>
+                          <p className="text-sm text-muted-foreground">وثائق شاملة قابلة للطباعة</p>
+                        </Card>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold mb-3">صيغ الملفات المتوفرة:</h3>
+                        <div className="grid grid-cols-4 gap-4 text-sm">
+                          <div className="bg-muted/20 p-3 rounded text-center">
+                            <strong>DWG</strong><br/>AutoCAD 2021
+                          </div>
+                          <div className="bg-muted/20 p-3 rounded text-center">
+                            <strong>PDF</strong><br/>عالي الدقة
+                          </div>
+                          <div className="bg-muted/20 p-3 rounded text-center">
+                            <strong>3D</strong><br/>SketchUp / 3ds Max
+                          </div>
+                          <div className="bg-muted/20 p-3 rounded text-center">
+                            <strong>IFC</strong><br/>BIM متوافق
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-center gap-4 mt-6 pt-4 border-t">
+                    <Button onClick={handlePrintDetailedReport} className="bg-primary hover:bg-primary/90">
+                      <Printer className="w-4 h-4 mr-2" />
+                      طباعة التقرير
+                    </Button>
+                    <Button variant="outline" onClick={() => setShowDetailedReport(false)}>
+                      إغلاق
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
               <Button className="bg-primary hover:bg-primary/90" size="sm" onClick={startNewProject}>
                 مشروع جديد
               </Button>
