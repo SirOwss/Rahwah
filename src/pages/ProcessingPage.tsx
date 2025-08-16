@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, FileText, Brain, Palette, Loader2 } from "lucide-react";
+import { generate3D_JSON, fileToDataURL } from "@/lib/generated3d";
+import { toast } from "sonner";
 
 interface ProcessingStep {
   id: string;
@@ -62,10 +64,39 @@ export const ProcessingPage = () => {
           )
         );
 
-        // إذا كانت هذه الخطوة الأخيرة، انتقل إلى صفحة المحرر
+        // إذا كانت هذه الخطوة الأخيرة، ابدأ توليد النموذج ثلاثي الأبعاد
         if (index === processSteps.length - 1) {
-          setTimeout(() => {
-            navigate("/preview");
+          setTimeout(async () => {
+            try {
+              const currentProject = JSON.parse(localStorage.getItem('currentProject') || '{}');
+              const prompt = currentProject.content || "تصميم منزل تقليدي";
+              
+              // جمع الصور المرجعية
+              const refs: string[] = [];
+              if (currentProject.uploadedFiles) {
+                for (const file of currentProject.uploadedFiles) {
+                  if (file.type?.startsWith('image/')) {
+                    refs.push(await fileToDataURL(file));
+                  }
+                }
+              }
+              
+              const modelUrl = await generate3D_JSON({ prompt, refs });
+              
+              const finalProject = {
+                ...currentProject,
+                modelUrl,
+                generatedAt: new Date().toISOString()
+              };
+              
+              localStorage.setItem('finalProject', JSON.stringify(finalProject));
+              toast.success('تم إنشاء النموذج ثلاثي الأبعاد بنجاح');
+              navigate("/final-results");
+            } catch (error) {
+              console.error('Error generating 3D model:', error);
+              toast.error('حدث خطأ في إنشاء النموذج ثلاثي الأبعاد');
+              navigate("/preview");
+            }
           }, 1000);
         }
       }, totalDuration);
