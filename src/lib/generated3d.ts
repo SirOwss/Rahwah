@@ -1,3 +1,4 @@
+// مؤقتاً - API غير متاح
 export async function generate3D_JSON({
     prompt,
     refs = [],
@@ -5,14 +6,12 @@ export async function generate3D_JSON({
     prompt: string;
     refs?: string[];
   }): Promise<string> {
-    const r = await fetch('/api/generate-3d', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ prompt, refs }),
-    });
-    const j = await r.json();
-    if (!j.ok) throw new Error(j.error || 'Generation failed');
-    return j.model as string;
+    // محاكاة تأخير للعرض
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    // إرجاع URL تجريبي للنموذج ثلاثي الأبعاد
+    console.log('Generating 3D model with prompt:', prompt, 'and refs:', refs);
+    return "https://storage.googleapis.com/lovable-uploads/sample-model.glb";
   }
   
   export function fileToDataURL(file: File): Promise<string> {
