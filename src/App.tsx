@@ -13,6 +13,7 @@ import { ProcessingPage } from "./pages/ProcessingPage";
 import FinalResults from "./pages/FinalResults";
 import { History } from "./pages/History";
 import { Demo } from "./pages/Demo";
+import TestAPI from "./pages/TestAPI";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/final-results" element={<FinalResults />} />
           <Route path="/history" element={<History />} />
           <Route path="/demo" element={<Demo />} />
+          <Route path="/test-api" element={<TestAPI />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
