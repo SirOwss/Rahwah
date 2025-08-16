@@ -5,9 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Upload, FileText, Image, Video, Send, ArrowRight, MessageSquare, Camera, Sparkles } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
-// + NEW
-import { generate3D_JSON, fileToDataURL } from "@/lib/generated3d";
-// + END NEW
+import { ThreeDService } from "@/lib/3d-service";
 
 
 export const Input = () => {
@@ -63,6 +61,7 @@ export const Input = () => {
   };
 
   const handleSubmit = async () => {
+    console.log('🎯 Starting form submission...');
     try {
       if (inputType === "prompt" && !promptText.trim()) {
         toast.error("يرجى إدخال وصف للمبنى");
@@ -82,14 +81,27 @@ export const Input = () => {
   
   ${promptText?.trim() || ""}
       `.trim();
-  
-      let refs: string[] = [];
+      console.log('📝 Generated prompt:', aseerPrompt);
+      
+      let imageUrls: string[] = [];
       if (uploadedFiles && uploadedFiles.length > 0) {
+        console.log('📷 Processing uploaded files...');
         const imgs = Array.from(uploadedFiles).filter(f => f.type.startsWith("image/"));
-        refs = await Promise.all(imgs.map(fileToDataURL));
+        imageUrls = await Promise.all(imgs.map(file => ThreeDService.fileToBase64(file)));
+        console.log('✅ Images processed:', imageUrls.length);
       }
   
-      const modelUrl = await generate3D_JSON({ prompt: aseerPrompt, refs });
+      console.log('🚀 Calling 3D service...');
+      const result = await ThreeDService.generate3DModel({ 
+        prompt: aseerPrompt, 
+        imageUrls 
+      });
+
+      console.log('📦 Service result:', result);
+
+      if (!result.success) {
+        throw new Error(result.error || 'فشل في إنشاء النموذج ثلاثي الأبعاد');
+      }
   
       const projectData = {
         type: inputType,
@@ -98,7 +110,8 @@ export const Input = () => {
         status: "completed",
         timestamp: Date.now(),
         title: inputType === "prompt" ? "مشروع من الوصف النصي" : "مشروع من الصور",
-        modelUrl, // مهم
+        modelUrl: result.modelUrl,
+        generatedImages: result.generatedImages,
       };
   
       localStorage.setItem("currentProject", JSON.stringify(projectData));

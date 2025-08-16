@@ -1,64 +1,19 @@
-import { useState, useEffect } from "react";
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { 
-  Download, 
-  FileText, 
-  Layers, 
-  ArrowRight, 
-  Clock, 
-  CheckCircle, 
-  Eye, 
-  Printer,
-  Share2,
-  Maximize,
-  Settings,
-  Info,
-  Calculator,
-  PlaneTakeoff,
-  Home,
-  Palette,
-  Building2,
-  MapPin,
-  User,
-  Calendar,
-  Shield,
-  Zap,
-  Wind,
-  Sun,
-  AlertTriangle,
-  Thermometer,
-  Ruler,
-  HardHat,
-  FileCheck,
-  Database,
-  BarChart3,
-  TrendingUp,
-  Leaf,
-  Save,
-  Plus,
-  Bot,
-  Cpu,
-  Activity
+  Building2, Download, FileText, Package, Archive, Layers, 
+  CheckCircle, Star, Shield, Calculator, Info, Bot, 
+  Sun, Wind, MapPin, Printer, Home
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import { Interactive3DViewer } from "@/components/Interactive3DViewer";
+import { useNavigate } from 'react-router-dom';
 
-export const FinalResults = () => {
-  const [project, setProject] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState("overview");
+const FinalResults = () => {
+  const [activeTab, setActiveTab] = useState("المتطلبات");
+  const [showDetailedReport, setShowDetailedReport] = useState(false);
   const navigate = useNavigate();
 
   // اجلب بيانات المشروع النهائي
@@ -113,9 +68,7 @@ export const FinalResults = () => {
 
   // مشروع جديد
   const startNewProject = () => {
-    localStorage.removeItem("finalProject");
-    localStorage.removeItem("currentProject");
-    navigate("/services");
+    navigate('/');
   };
 
   // طباعة التقرير
@@ -295,838 +248,500 @@ export const FinalResults = () => {
             </Card>
           </div>
 
-          {/* AI Inputs Section */}
-          <div className={`${activeTab === "ai-inputs" ? "block" : "hidden print:block"} print:break-before-page`}>
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bot className="w-5 h-5" />
-                  مدخلات الذكاء الاصطناعي
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <h3 className="font-semibold mb-3">النص المُدخل (Prompt):</h3>
-                  <div className="bg-background p-4 rounded border border-dashed">
-                    <p className="font-mono text-sm">{project.content || "تصميم منزل تقليدي بفناء مركزي، يتضمن 4 غرف نوم وصالة ومطبخ ودورات مياه، مع التركيز على الطراز المعماري التراثي والاستفادة من الإضاءة الطبيعية"}</p>
-                  </div>
-                </div>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold mb-3">معلمات النموذج:</h3>
-                    <Table>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell className="font-medium">نسخة النموذج</TableCell>
-                          <TableCell>GPT-4 Architecture v2.1</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Temperature</TableCell>
-                          <TableCell>0.7</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Top-p</TableCell>
-                          <TableCell>0.9</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">Seed</TableCell>
-                          <TableCell>42</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-semibold mb-3">قيود التصميم:</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li className="flex items-center gap-2">
-                        <Ruler className="w-4 h-4 text-primary" />
-                        الحد الأقصى للارتفاع: 6 أمتار
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Building2 className="w-4 h-4 text-primary" />
-                        الانتكاسات: 3م من جميع الجهات
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-primary" />
-                        نسبة التغطية: 50% كحد أقصى
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <HardHat className="w-4 h-4 text-primary" />
-                        عدد المواقف: 2 كحد أدنى
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold mb-3">مستوى التفاصيل المستهدف:</h3>
-                  <Badge variant="outline" className="mr-2">LOD 300</Badge>
-                  <span className="text-sm text-muted-foreground">
-                    مستوى مناسب للتطوير التفصيلي والحصول على تراخيص البناء
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Site Analysis Section */}
-          <div className={`${activeTab === "site-analysis" ? "block" : "hidden print:block"} print:break-before-page`}>
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5" />
-                  بيانات الموقع والسياق
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold mb-3">معلومات الموقع:</h3>
-                    <Table>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell className="font-medium">إحداثيات المركز</TableCell>
-                          <TableCell>24.7136° N, 46.6753° E</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">مساحة الموقع</TableCell>
-                          <TableCell>500 م²</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">منسوب المرجع</TableCell>
-                          <TableCell>612 م فوق سطح البحر</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="font-medium">اتجاه الشمال</TableCell>
-                          <TableCell>الشمال الحقيقي</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-semibold mb-3">التحليل المناخي:</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <Sun className="w-5 h-5 text-yellow-500" />
-                        <div>
-                          <p className="font-medium">الإشعاع الشمسي</p>
-                          <p className="text-sm text-muted-foreground">مرتفع - يتطلب حلول التظليل</p>
+                      <Card className="p-6">
+                        <h3 className="font-bold text-xl mb-4">المؤشرات الرئيسية</h3>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                          <div className="space-y-4">
+                            <div className="flex justify-between p-3 bg-muted/20 rounded">
+                              <span>السعة/الإشغال التصميمي:</span>
+                              <span className="font-medium">8-10 أشخاص</span>
+                            </div>
+                            <div className="flex justify-between p-3 bg-muted/20 rounded">
+                              <span>تقدير مبدئي للتكلفة:</span>
+                              <span className="font-medium">1,430,000 ريال</span>
+                            </div>
+                          </div>
+                          <div className="space-y-4">
+                            <h4 className="font-semibold">المخرجات:</h4>
+                            <ul className="text-sm space-y-1">
+                              <li>• نماذج 3D - GLTF/IFC/RVT</li>
+                              <li>• رسومات 2D - DWG/PDF</li>
+                              <li>• جداول الكميات - XLSX</li>
+                              <li>• تقرير امتثال شامل</li>
+                            </ul>
+                          </div>
                         </div>
+                      </Card>
+                    </div>
+
+                    {/* AI Inputs */}
+                    <div className="space-y-8">
+                      <div className="text-center">
+                        <h2 className="text-3xl font-bold text-primary mb-2">مدخلات الذكاء الاصطناعي (البرومبت والمعطيات)</h2>
+                        <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto"></div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <Wind className="w-5 h-5 text-blue-500" />
-                        <div>
-                          <p className="font-medium">الرياح السائدة</p>
-                          <p className="text-sm text-muted-foreground">شمالية غربية، 15-25 كم/ساعة</p>
+                      
+                      <Card className="p-6">
+                        <h3 className="font-bold text-xl mb-4 text-primary">النص المُدخل (Prompt)</h3>
+                        <div className="bg-muted/50 p-6 rounded-lg border border-primary/20">
+                          <p className="text-sm font-mono leading-relaxed italic">
+                            "أريد تصميم فيلا عصرية من طابقين تتضمن 4 غرف نوم و3 حمامات مع صالة واسعة ومطبخ عصري 
+                            ومجلس ضيوف وغرفة طعام وغرفة خادمة ومخزن وحديقة، على قطعة أرض مساحتها 600 متر مربع، 
+                            مع مراعاة الاشتراطات البلدية والاستدامة البيئية والتوجيه الصحيح للمبنى والإضاءة الطبيعية"
+                          </p>
                         </div>
+                      </Card>
+                      
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <Card className="p-6">
+                          <h3 className="font-bold text-xl mb-4 text-primary">المعلمات التقنية</h3>
+                          <div className="space-y-4">
+                            <div className="grid grid-cols-1 gap-4 text-sm">
+                              <div className="flex justify-between p-3 bg-muted/30 rounded">
+                                <span>نُسخة نموذج الذكاء الاصطناعي:</span>
+                                <span className="font-medium">RAHWA-Architecture-v4</span>
+                              </div>
+                              <div className="flex justify-between p-3 bg-muted/30 rounded">
+                                <span>المعلمات: Seed:</span>
+                                <span className="font-medium">12345</span>
+                              </div>
+                              <div className="flex justify-between p-3 bg-muted/30 rounded">
+                                <span>Temperature:</span>
+                                <span className="font-medium">0.7</span>
+                              </div>
+                              <div className="flex justify-between p-3 bg-muted/30 rounded">
+                                <span>Top‑p:</span>
+                                <span className="font-medium">0.9</span>
+                              </div>
+                              <div className="flex justify-between p-3 bg-muted/30 rounded">
+                                <span>Steps:</span>
+                                <span className="font-medium">50</span>
+                              </div>
+                              <div className="flex justify-between p-3 bg-muted/30 rounded">
+                                <span>مستوى التفاصيل LOD المستهدف:</span>
+                                <span className="font-medium">LOD 200/300/350...</span>
+                              </div>
+                            </div>
+                          </div>
+                        </Card>
+                        
+                        <Card className="p-6">
+                          <h3 className="font-bold text-xl mb-4 text-primary">التنسيقات المطلوبة</h3>
+                          <div className="space-y-3">
+                            <div className="flex justify-between p-3 bg-info/10 rounded">
+                              <span>IFC/RVT/GLTF/DWG/PDF:</span>
+                              <span className="font-medium">جميع الصيغ متوفرة</span>
+                            </div>
+                            <p className="text-sm text-muted-foreground leading-relaxed mt-4">
+                              <strong>ملاحظة:</strong> احتفظ بنسخة JSON للمدخلات ضمن الملاحق.
+                            </p>
+                          </div>
+                        </Card>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <Thermometer className="w-5 h-5 text-red-500" />
-                        <div>
-                          <p className="font-medium">درجة الحرارة</p>
-                          <p className="text-sm text-muted-foreground">صيف: 45°C، شتاء: 10°C</p>
+
+                      <Card className="p-6">
+                        <h3 className="font-bold text-xl mb-4">قيود التصميم</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                          <div>
+                            <h4 className="font-semibold mb-3 text-secondary">حد أقصى ارتفاع/انتكاسات/تغطية/مواقف</h4>
+                            <ul className="space-y-2 text-sm">
+                              <li>• الارتفاع الأقصى: 12 متر</li>
+                              <li>• الانتكاسات: أمامي 4م، جانبي 2م، خلفي 3م</li>
+                              <li>• تغطية الأرض: ≤ 70%</li>
+                              <li>• مواقف السيارات: 2 كحد أدنى</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold mb-3 text-secondary">بيانات الموقع</h4>
+                            <ul className="space-y-2 text-sm">
+                              <li>• إحداثيات WGS84: 24.7136°N, 46.6753°E</li>
+                              <li>• اتجاه الشمال: صحيح</li>
+                              <li>• منسوب صفر: +610 متر</li>
+                              <li>• المناخ: المنطقة المناخية 2A</li>
+                              <li>• الحرارة/الرياح/الإشعاد: 25-45°م</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold mb-3 text-secondary">المراجع الأسلوبية/النصية</h4>
+                            <ul className="space-y-2 text-sm">
+                              <li>• الطراز المعماري السعودي المعاصر</li>
+                              <li>• روابط ووصفات للمراجع</li>
+                              <li>• مستوى التفاصيل LOD 200/300/350</li>
+                              <li>• التنسيقات: IFC/RVT/GLTF/DWG/PDF</li>
+                            </ul>
+                          </div>
                         </div>
+                      </Card>
+                    </div>
+
+                    {/* Site Data and Context */}
+                    <div className="space-y-8">
+                      <div className="text-center">
+                        <h2 className="text-3xl font-bold text-primary mb-2">بيانات الموقع والسياق</h2>
+                        <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto"></div>
+                      </div>
+                      
+                      <Card className="p-6">
+                        <h3 className="font-bold text-xl mb-4">الوصف</h3>
+                        <p className="text-muted-foreground mb-6 leading-relaxed">
+                          قطعة أرض سكنية مستوية تقع في حي راقي بشمال مدينة الرياض، محاطة بفيلل سكنية مماثلة ومناطق خضراء. 
+                          الموقع يتمتع بإطلالة جميلة ووصول ممتاز للخدمات العامة والطرق الرئيسية. الطبوغرافيا مستوية مما يسهل عملية البناء، 
+                          والمنطقة تتميز بالهدوء والخصوصية المطلوبة للسكن العائلي.
+                        </p>
+                        
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                          <div>
+                            <h4 className="font-semibold mb-4">تحليل الشمس/الظل</h4>
+                            <p className="text-sm text-muted-foreground">مخططات مختصرة للإشعاع الشمسي الممتاز من الجنوب</p>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold mb-4">الرياح السائدة</h4>
+                            <p className="text-sm text-muted-foreground">اتجاهات شمالية غربية بسرعات 15-25 كم/س</p>
+                          </div>
+                        </div>
+                      </Card>
+
+                      <Card className="p-6">
+                        <h3 className="font-bold text-xl mb-6 text-center">جدول الموقع</h3>
+                        <div className="overflow-x-auto">
+                          <table className="w-full">
+                            <thead>
+                              <tr>
+                                <th className="text-right">البند</th>
+                                <th className="text-right">القيمة</th>
+                                <th className="text-right">ملاحظات</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>إحداثيات مركز الموقع</td>
+                                <td>[lat, lon]</td>
+                                <td>نظام WGS84</td>
+                              </tr>
+                              <tr>
+                                <td>مساحة الموقع (م²)</td>
+                                <td>600</td>
+                                <td>شكل مربع منتظم</td>
+                              </tr>
+                              <tr>
+                                <td>منسوب المرجع (م)</td>
+                                <td>+610</td>
+                                <td>فوق مستوى سطح البحر</td>
+                              </tr>
+                              <tr>
+                                <td>اتجاه الشمال</td>
+                                <td>صحيح</td>
+                                <td>انحراف مغناطيسي +3°</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </Card>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <Card className="p-6 text-center">
+                          <Sun className="w-12 h-12 mx-auto mb-3 text-warning" />
+                          <h4 className="font-semibold mb-2">الوصول والحركة</h4>
+                          <p className="text-sm text-muted-foreground">مركبات/مشاة/خدمات مع وصول ممتاز</p>
+                        </Card>
+                        <Card className="p-6 text-center">
+                          <Wind className="w-12 h-12 mx-auto mb-3 text-info" />
+                          <h4 className="font-semibold mb-2">خريطة الخدمات</h4>
+                          <p className="text-sm text-muted-foreground">مياه/كهرباء/صرف متوفرة</p>
+                        </Card>
+                        <Card className="p-6 text-center">
+                          <MapPin className="w-12 h-12 mx-auto mb-3 text-success" />
+                          <h4 className="font-semibold mb-2">المناخ والبيئة</h4>
+                          <p className="text-sm text-muted-foreground">مناخ مداري صحراوي مع رياح طبيعية</p>
+                        </Card>
                       </div>
                     </div>
-                  </div>
-                </div>
 
-                <div>
-                  <h3 className="font-semibold mb-3">الوصول والحركة:</h3>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-muted/30 p-3 rounded-lg">
-                      <h4 className="font-medium text-sm">وصول المركبات</h4>
-                      <p className="text-xs text-muted-foreground mt-1">من الشارع الرئيسي عرض 20م</p>
-                    </div>
-                    <div className="bg-muted/30 p-3 rounded-lg">
-                      <h4 className="font-medium text-sm">وصول المشاة</h4>
-                      <p className="text-xs text-muted-foreground mt-1">رصيف بعرض 2م مع إضاءة</p>
-                    </div>
-                    <div className="bg-muted/30 p-3 rounded-lg">
-                      <h4 className="font-medium text-sm">الخدمات</h4>
-                      <p className="text-xs text-muted-foreground mt-1">دخول خلفي للخدمات</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Technical Specifications */}
-          <div className={`${activeTab === "technical" ? "block" : "hidden print:block"} print:break-before-page`}>
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <PlaneTakeoff className="w-5 h-5" />
-                  المواصفات التقنية والأنظمة
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                
-                {/* Structural System */}
-                <div>
-                  <h3 className="font-semibold mb-3 flex items-center gap-2">
-                    <Building2 className="w-4 h-4" />
-                    النظام الإنشائي
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>العنصر</TableHead>
-                          <TableHead>المواصفة</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell>شبكة المحاور</TableCell>
-                          <TableCell>A-D / 1-4</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>نوع النظام</TableCell>
-                          <TableCell>إطار خرساني مسلح</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>البحور الرئيسية</TableCell>
-                          <TableCell>5-6 أمتار</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>سماكة البلاطة</TableCell>
-                          <TableCell>20 سم</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
+                    {/* Continue with other sections... */}
                     
-                    <div>
-                      <h4 className="font-medium mb-2">الأحمال الافتراضية:</h4>
-                      <ul className="text-sm space-y-1">
-                        <li>• الحمل الحي: 2 كن/م² (سكني)</li>
-                        <li>• الحمل الميت: محسوب حسب المواد</li>
-                        <li>• حمل الرياح: 1.2 كن/م²</li>
-                        <li>• الحمل الزلزالي: حسب الكود السعودي</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* MEP Systems */}
-                <div>
-                  <h3 className="font-semibold mb-3 flex items-center gap-2">
-                    <Zap className="w-4 h-4" />
-                    أنظمة المبنى (MEP)
-                  </h3>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-muted/30 p-4 rounded-lg">
-                      <h4 className="font-medium mb-2">التكييف والتهوية (HVAC)</h4>
-                      <ul className="text-xs space-y-1">
-                        <li>• نظام منفصل (سبليت)</li>
-                        <li>• قدرة: 5 طن تبريد</li>
-                        <li>• تهوية طبيعية عبر الفناء</li>
-                        <li>• مراوح شفط في دورات المياه</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-muted/30 p-4 rounded-lg">
-                      <h4 className="font-medium mb-2">النظام الصحي</h4>
-                      <ul className="text-xs space-y-1">
-                        <li>• شبكة مياه باردة وساخنة</li>
-                        <li>• نظام صرف بالجاذبية</li>
-                        <li>• خزان علوي 2000 لتر</li>
-                        <li>• نظام إعادة تدوير المياه الرمادية</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-muted/30 p-4 rounded-lg">
-                      <h4 className="font-medium mb-2">النظام الكهربائي</h4>
-                      <ul className="text-xs space-y-1">
-                        <li>• حمل تقديري: 15 كيلو واط</li>
-                        <li>• لوحة رئيسية + فرعية</li>
-                        <li>• إضاءة LED ذكية</li>
-                        <li>• نظام أمان متكامل</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Materials and Finishes */}
-                <div>
-                  <h3 className="font-semibold mb-3 flex items-center gap-2">
-                    <Palette className="w-4 h-4" />
-                    المواد والتشطيبات
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="font-medium mb-2">التشطيبات الخارجية:</h4>
-                      <Table>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell>الواجهة الرئيسية</TableCell>
-                            <TableCell>حجر طبيعي + طوب أحمر</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>النوافذ</TableCell>
-                            <TableCell>ألمنيوم مقطع حراري</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>السقف</TableCell>
-                            <TableCell>قرميد أحمر تراثي</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-medium mb-2">التشطيبات الداخلية:</h4>
-                      <Table>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell>أرضيات الصالة</TableCell>
-                            <TableCell>رخام كريمي</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>أرضيات الغرف</TableCell>
-                            <TableCell>باركيه خشبي</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>الجدران</TableCell>
-                            <TableCell>دهان أكريليك</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Sustainability Section */}
-          <div className={`${activeTab === "sustainability" ? "block" : "hidden print:block"} print:break-before-page`}>
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Leaf className="w-5 h-5" />
-                  الأداء البيئي والاستدامة
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-semibold mb-3">كفاءة الطاقة:</h3>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span>نسبة الفتحات (WWR)</span>
-                        <span className="font-semibold">35%</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>الإضاءة الطبيعية</span>
-                        <span className="font-semibold">ممتاز</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>الاستهلاك السنوي المستهدف</span>
-                        <span className="font-semibold">120 كيلو واط ساعة/م²</span>
+                    {/* Footer */}
+                    <div className="text-center pt-8 border-t-2 border-primary/20">
+                      <div className="space-y-4">
+                        <div className="flex justify-center items-center gap-4">
+                          <Building2 className="w-8 h-8 text-primary" />
+                          <span className="text-xl font-bold text-primary">RAHWA AI Architecture</span>
+                        </div>
+                        <p className="text-muted-foreground">
+                          تم إنتاج هذا التقرير بواسطة نظام الذكاء الاصطناعي المعماري RAHWA
+                        </p>
+                        <div className="flex justify-center gap-8 text-sm text-muted-foreground">
+                          <span>الإصدار: v1.0</span>
+                          <span>التاريخ: {new Date().toLocaleDateString('ar-SA')}</span>
+                          <span>الصفحات: تقرير شامل</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-4">
+                          ملاحظة: احتفظ بنسخة JSON للمدخلات ضمن الملاحق الرقمية
+                        </p>
                       </div>
                     </div>
                   </div>
                   
-                  <div>
-                    <h3 className="font-semibold mb-3">البصمة الكربونية:</h3>
-                    <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                      <p className="text-green-800 font-semibold text-2xl">15 كجم CO₂e/م²</p>
-                      <p className="text-green-600 text-sm">أقل من المتوسط بنسبة 30%</p>
-                    </div>
+                  <div className="flex justify-center gap-4 mt-6 pt-4 border-t">
+                    <Button onClick={handlePrintDetailedReport} className="bg-primary hover:bg-primary/90">
+                      <Printer className="w-4 h-4 mr-2" />
+                      طباعة التقرير
+                    </Button>
+                    <Button variant="outline" onClick={() => setShowDetailedReport(false)}>
+                      إغلاق
+                    </Button>
                   </div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold mb-3">أهداف الاعتماد:</h3>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-muted/30 p-3 rounded-lg text-center">
-                      <h4 className="font-medium">LEED</h4>
-                      <p className="text-sm text-muted-foreground">مؤهل للحصول على تقييم فضي</p>
-                    </div>
-                    <div className="bg-muted/30 p-3 rounded-lg text-center">
-                      <h4 className="font-medium">BREEAM</h4>
-                      <p className="text-sm text-muted-foreground">متوافق مع المعايير</p>
-                    </div>
-                    <div className="bg-muted/30 p-3 rounded-lg text-center">
-                      <h4 className="font-medium">Mostadam</h4>
-                      <p className="text-sm text-muted-foreground">مطابق للاشتراطات السعودية</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold mb-3">ميزات الاستدامة:</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                        <span className="text-sm">الفناء المركزي للتهوية الطبيعية</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                        <span className="text-sm">مواد محلية وقليلة التأثير البيئي</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                        <span className="text-sm">نظام جمع مياه الأمطار</span>
-                      </li>
-                    </ul>
-                    <ul className="space-y-2">
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                        <span className="text-sm">إضاءة LED موفرة للطاقة</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                        <span className="text-sm">عزل حراري عالي الكفاءة</span>
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                        <span className="text-sm">استخدام الطاقة الشمسية</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </DialogContent>
+              </Dialog>
+              
+              <Button className="bg-primary hover:bg-primary/90" size="sm" onClick={startNewProject}>
+                مشروع جديد
+              </Button>
+            </div>
           </div>
+        </div>
 
-          {/* Cost Analysis */}
-          <div className={`${activeTab === "cost-analysis" ? "block" : "hidden print:block"} print:break-before-page`}>
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calculator className="w-5 h-5" />
-                  التقدير المالي والكميات
+        {/* Main Layout */}
+        <div className="print:hidden flex gap-6">
+          {/* Sidebar - Download Section */}
+          <div className="w-80 space-y-6">
+            {/* Download All Files */}
+            <Card className="bg-card/50 border-primary/20">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Download className="w-5 h-5" />
+                  تحميل جميع الملفات
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <h3 className="font-semibold mb-3">ملخص التكلفة:</h3>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>البند</TableHead>
-                        <TableHead>الكمية</TableHead>
-                        <TableHead>الوحدة</TableHead>
-                        <TableHead>سعر الوحدة</TableHead>
-                        <TableHead>المجموع</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>الأعمال الإنشائية</TableCell>
-                        <TableCell>250</TableCell>
-                        <TableCell>م²</TableCell>
-                        <TableCell>800 ريال</TableCell>
-                        <TableCell>200,000 ريال</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>التشطيبات الداخلية</TableCell>
-                        <TableCell>250</TableCell>
-                        <TableCell>م²</TableCell>
-                        <TableCell>600 ريال</TableCell>
-                        <TableCell>150,000 ريال</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>الأنظمة الكهربائية</TableCell>
-                        <TableCell>1</TableCell>
-                        <TableCell>مجمل</TableCell>
-                        <TableCell>50,000 ريال</TableCell>
-                        <TableCell>50,000 ريال</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>أنظمة السباكة</TableCell>
-                        <TableCell>1</TableCell>
-                        <TableCell>مجمل</TableCell>
-                        <TableCell>35,000 ريال</TableCell>
-                        <TableCell>35,000 ريال</TableCell>
-                      </TableRow>
-                      <TableRow className="border-t-2">
-                        <TableCell className="font-semibold">المجموع الفرعي</TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell className="font-semibold">435,000 ريال</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>احتياطي (5%)</TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell>21,750 ريال</TableCell>
-                      </TableRow>
-                      <TableRow className="bg-primary/5">
-                        <TableCell className="font-bold">الإجمالي النهائي</TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell className="font-bold text-primary">456,750 ريال</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
-
-                <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
-                  <p className="text-sm text-yellow-800">
-                    <AlertTriangle className="w-4 h-4 inline mr-1" />
-                    التكلفة تقديرية وقد تختلف حسب المواد المختارة وظروف الموقع والأسعار السائدة في السوق.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Safety and Compliance */}
-          <Card className="mb-8 print:break-before-page">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="w-5 h-5" />
-                السلامة والامتثال
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="font-semibold mb-3">مصفوفة الامتثال:</h3>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>البند</TableHead>
-                      <TableHead>المطلب النظامي</TableHead>
-                      <TableHead>الحالة</TableHead>
-                      <TableHead>التعليق</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>الارتفاع الأقصى</TableCell>
-                      <TableCell>≤ 6 أمتار</TableCell>
-                      <TableCell>
-                        <Badge variant="default" className="bg-green-500/10 text-green-600">
-                          <CheckCircle className="w-3 h-3 mr-1" />
-                          مطابق
-                        </Badge>
-                      </TableCell>
-                      <TableCell>5.8 متر فعلي</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>الارتدادات</TableCell>
-                      <TableCell>3م من جميع الجهات</TableCell>
-                      <TableCell>
-                        <Badge variant="default" className="bg-green-500/10 text-green-600">
-                          <CheckCircle className="w-3 h-3 mr-1" />
-                          مطابق
-                        </Badge>
-                      </TableCell>
-                      <TableCell>محقق بالكامل</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>نسبة التغطية</TableCell>
-                      <TableCell>≤ 60%</TableCell>
-                      <TableCell>
-                        <Badge variant="default" className="bg-green-500/10 text-green-600">
-                          <CheckCircle className="w-3 h-3 mr-1" />
-                          مطابق
-                        </Badge>
-                      </TableCell>
-                      <TableCell>50% فعلي</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>مواقف السيارات</TableCell>
-                      <TableCell>≥ 2 موقف</TableCell>
-                      <TableCell>
-                        <Badge variant="default" className="bg-green-500/10 text-green-600">
-                          <CheckCircle className="w-3 h-3 mr-1" />
-                          مطابق
-                        </Badge>
-                      </TableCell>
-                      <TableCell>2 موقف مغطى</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-3">متطلبات السلامة:</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <ul className="space-y-2">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm">2 مخرج طوارئ (رئيسي + خلفي)</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm">عرض الممرات ≥ 1.2 متر</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm">إضاءة طوارئ ولوحات إرشادية</span>
-                    </li>
-                  </ul>
-                  <ul className="space-y-2">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm">طفايات حريق حسب المواصفة</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm">نظام إنذار ضد الحريق</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm">تهوية طبيعية كافية</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* 3D Model and Drawings */}
-          <Card className="mb-8 print:break-before-page">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Layers className="w-5 h-5" />
-                النموذج ثلاثي الأبعاد والمخططات
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="font-semibold mb-3">النموذج التفاعلي:</h3>
-                <Interactive3DViewer 
-                  modelType="traditional-house" 
-                  className="w-full h-[400px] border rounded-lg"
-                />
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-3">قائمة المخططات:</h3>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>كود اللوحة</TableHead>
-                      <TableHead>العنوان</TableHead>
-                      <TableHead>المقياس</TableHead>
-                      <TableHead>الحالة</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>A-001</TableCell>
-                      <TableCell>جدول المحتويات</TableCell>
-                      <TableCell>—</TableCell>
-                      <TableCell>
-                        <Badge variant="default" className="bg-green-500/10 text-green-600">جاهز</Badge>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>A-101</TableCell>
-                      <TableCell>مخطط موقع عام</TableCell>
-                      <TableCell>1:200</TableCell>
-                      <TableCell>
-                        <Badge variant="default" className="bg-green-500/10 text-green-600">جاهز</Badge>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>A-201</TableCell>
-                      <TableCell>مخطط الطابق الأرضي</TableCell>
-                      <TableCell>1:100</TableCell>
-                      <TableCell>
-                        <Badge variant="default" className="bg-green-500/10 text-green-600">جاهز</Badge>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>A-301</TableCell>
-                      <TableCell>الواجهات الأربع</TableCell>
-                      <TableCell>1:100</TableCell>
-                      <TableCell>
-                        <Badge variant="default" className="bg-green-500/10 text-green-600">جاهز</Badge>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>A-401</TableCell>
-                      <TableCell>المقاطع الطولية والعرضية</TableCell>
-                      <TableCell>1:100</TableCell>
-                      <TableCell>
-                        <Badge variant="default" className="bg-green-500/10 text-green-600">جاهز</Badge>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-medium mb-2">مخطط الطابق الأرضي:</h4>
-                  <div className="relative bg-white rounded-lg border overflow-hidden">
-                    <img 
-                      src="/lovable-uploads/1db97232-e98e-4080-a6b5-03b6ee33eabd.png" 
-                      alt="مخطط الطابق الأرضي" 
-                      className="w-full h-48 object-contain"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2">الواجهة الرئيسية:</h4>
-                  <div className="relative bg-white rounded-lg border overflow-hidden">
-                    <img 
-                      src="/lovable-uploads/602a1e64-0a86-41cd-b250-7f60f95ff0a6.png" 
-                      alt="الواجهة الرئيسية" 
-                      className="w-full h-48 object-contain"
-                    />
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Digital Deliverables */}
-          <Card className="mb-8 print:break-before-page">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Database className="w-5 h-5" />
-                خطة التسليمات والمعايير الرقمية
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h3 className="font-semibold mb-3">التسليمات الرقمية:</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium mb-2">ملفات التصميم:</h4>
-                    <ul className="space-y-1 text-sm">
-                      <li>• ملفات AutoCAD (.dwg)</li>
-                      <li>• نموذج ثلاثي الأبعاد (.ifc/.rvt)</li>
-                      <li>• مخططات PDF قابلة للطباعة</li>
-                      <li>• نموذج الواقع الافتراضي (.gltf)</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-medium mb-2">البيانات والتقارير:</h4>
-                    <ul className="space-y-1 text-sm">
-                      <li>• جداول الكميات (.xlsx)</li>
-                      <li>• تقرير الامتثال (.pdf)</li>
-                      <li>• دليل المواصفات (.pdf)</li>
-                      <li>• بيانات النموذج (.json)</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-3">اتفاقية التسمية:</h3>
-                <div className="bg-muted/30 p-4 rounded-lg">
-                  <code className="text-sm">
-                    ProjectCode_Discipline_Sheet/Model_Version_Date
-                  </code>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    مثال: TH001_A_201_v1.0_20241215
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-3">الميتاداتا:</h3>
-                <Table>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="font-medium">المؤلف/الأداة</TableCell>
-                      <TableCell>نظام الذكاء الاصطناعي المعماري v2.1</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">الإصدار</TableCell>
-                      <TableCell>1.0</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">الوحدات</TableCell>
-                      <TableCell>متر</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium">نظام الإحداثيات</TableCell>
-                      <TableCell>UTM Zone 38N</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Version Tracking */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileCheck className="w-5 h-5" />
-                تتبع الإصدارات والتغييرات
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>الإصدار</TableHead>
-                    <TableHead>التاريخ</TableHead>
-                    <TableHead>الكاتب/الأداة</TableHead>
-                    <TableHead>وصف التغيير</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>v1.0</TableCell>
-                    <TableCell>{new Date().toLocaleDateString('ar-SA')}</TableCell>
-                    <TableCell>نظام الذكاء الاصطناعي</TableCell>
-                    <TableCell>إصدار أولي للتصميم المعماري</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-
-          {/* Download Section */}
-          <Card className="mb-8 print:hidden">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Download className="w-5 h-5" />
-                تحميل الملفات والتقارير
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-3 gap-4">
-                <Button 
-                  className="w-full btn-primary" 
-                  onClick={() => handleDownload("COMPLETE_PACKAGE")}
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  الحزمة الكاملة
-                </Button>
-                
+              <CardContent className="space-y-3">
                 <Button 
                   variant="outline" 
-                  className="w-full" 
-                  onClick={() => handleDownload("ARCHITECTURAL_DRAWINGS")}
+                  className="w-full justify-start gap-2 bg-primary/5 border-primary/30 text-primary"
+                  onClick={() => handleDownload('AutoCAD')}
                 >
-                  <FileText className="w-4 h-4 mr-2" />
-                  المخططات المعمارية
+                  <Archive className="w-4 h-4" />
+                  الكتلة AutoCAD برمجة
                 </Button>
-                
                 <Button 
                   variant="outline" 
-                  className="w-full" 
-                  onClick={() => handleDownload("3D_MODEL")}
+                  className="w-full justify-start gap-2"
+                  onClick={() => handleDownload('PDF')}
                 >
-                  <Layers className="w-4 h-4 mr-2" />
+                  <FileText className="w-4 h-4" />
+                  PDF جميع المخططات
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start gap-2"
+                  onClick={() => handleDownload('3D')}
+                >
+                  <Package className="w-4 h-4" />
                   النموذج ثلاثي الأبعاد
                 </Button>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
 
+            {/* Individual Downloads */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">تحميل منفرد</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start gap-2 text-sm"
+                  onClick={() => handleDownload('FloorPlan')}
+                >
+                  <Layers className="w-4 h-4" />
+                  مخطط أرضية
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start gap-2 text-sm"
+                  onClick={() => handleDownload('Elevations')}
+                >
+                  <Building2 className="w-4 h-4" />
+                  المساقط
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Project Summary */}
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">ملخص المشروع</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div>
+                  <span className="text-xs text-muted-foreground">البناء</span>
+                  <p className="font-medium">{project?.title || "فيلا سكنية عصرية"}</p>
+                </div>
+                <div>
+                  <span className="text-xs text-muted-foreground">التاريخ</span>
+                  <p className="font-medium">{new Date().toLocaleDateString('ar-SA')}</p>
+                </div>
+                <div>
+                  <span className="text-xs text-muted-foreground">المحافظات</span>
+                  <p className="font-medium">0</p>
+                </div>
+                <div>
+                  <span className="text-xs text-muted-foreground">الوصف الأساسي</span>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    فيلا عصرية من طابقين موضعة بحديقة 
+                    واسعة على قطعة أرض مساحتها 600 متر مربع
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+              <TabsList className="grid w-full grid-cols-4 bg-muted/30">
+                <TabsTrigger value="المتطلبات" className="data-[state=active]:bg-background">
+                  المتطلبات
+                </TabsTrigger>
+                <TabsTrigger value="التصميم" className="data-[state=active]:bg-background">
+                  التصميم
+                </TabsTrigger>
+                <TabsTrigger value="الخريطة" className="data-[state=active]:bg-background">
+                  الخريطة
+                </TabsTrigger>
+                <TabsTrigger value="النتائج" className="data-[state=active]:bg-background">
+                  النتائج
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="المتطلبات" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>متطلبات المشروع</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <h3 className="font-semibold">المتطلبات الأساسية</h3>
+                        <ul className="space-y-2 text-sm">
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-success" />
+                            4 غرف نوم رئيسية
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-success" />
+                            3 حمامات
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-success" />
+                            صالة معيشة واسعة
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-success" />
+                            مطبخ عصري
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="space-y-4">
+                        <h3 className="font-semibold">المتطلبات الإضافية</h3>
+                        <ul className="space-y-2 text-sm">
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-success" />
+                            مجلس ضيوف
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-success" />
+                            غرفة طعام
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-success" />
+                            غرفة خادمة
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-success" />
+                            مخزن وحديقة
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="التصميم" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>التصميم المعماري</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      <div className="grid grid-cols-3 gap-4">
+                        <Card className="p-4 text-center">
+                          <Building2 className="w-8 h-8 mx-auto mb-2 text-primary" />
+                          <h4 className="font-semibold">التصميم الخارجي</h4>
+                          <p className="text-sm text-muted-foreground">واجهات عصرية أنيقة</p>
+                        </Card>
+                        <Card className="p-4 text-center">
+                          <Layers className="w-8 h-8 mx-auto mb-2 text-primary" />
+                          <h4 className="font-semibold">التوزيع الداخلي</h4>
+                          <p className="text-sm text-muted-foreground">مساحات مفتوحة ومريحة</p>
+                        </Card>
+                        <Card className="p-4 text-center">
+                          <Star className="w-8 h-8 mx-auto mb-2 text-primary" />
+                          <h4 className="font-semibold">التشطيبات</h4>
+                          <p className="text-sm text-muted-foreground">مواد عالية الجودة</p>
+                        </Card>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="الخريطة" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>موقع المشروع</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-64 bg-muted/30 rounded-lg flex items-center justify-center">
+                      <p className="text-muted-foreground">خريطة تفاعلية للموقع</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="النتائج" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>ملخص النتائج</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-3 gap-6">
+                      <div className="text-center">
+                        <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <CheckCircle className="w-8 h-8 text-success" />
+                        </div>
+                        <h4 className="font-semibold">التصميم مكتمل</h4>
+                        <p className="text-sm text-muted-foreground">100% جاهز</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-16 h-16 bg-info/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <Shield className="w-8 h-8 text-info" />
+                        </div>
+                        <h4 className="font-semibold">مطابق للأكواد</h4>
+                        <p className="text-sm text-muted-foreground">معتمد</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-16 h-16 bg-warning/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <Star className="w-8 h-8 text-warning" />
+                        </div>
+                        <h4 className="font-semibold">جودة عالية</h4>
+                        <p className="text-sm text-muted-foreground">متميز</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </div>
     </div>
