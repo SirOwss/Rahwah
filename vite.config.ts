@@ -19,11 +19,15 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  define: {
-    global: 'globalThis',
+  esbuild: {
+    target: 'es2020'
   },
-  optimizeDeps: {
-    exclude: [],
-    force: true
+  build: {
+    target: 'es2020',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   }
 }));
