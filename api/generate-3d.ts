@@ -2,6 +2,10 @@
 import { GoogleGenAI, Modality } from '@google/genai';
 import { fal } from '@fal-ai/client';
 
+export const config = {
+  runtime: 'nodejs18',
+};
+
 export default async function handler(req: Request): Promise<Response> {
   try {
     if (req.method !== 'POST') {

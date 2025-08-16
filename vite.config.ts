@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     rollupOptions: {
-      external: [],
+      external: ['@fal-ai/client', '@google/genai'],
       output: {
         manualChunks: undefined
       }
@@ -30,6 +30,6 @@ export default defineConfig(({ mode }) => ({
     minify: 'esbuild'
   },
   optimizeDeps: {
-    exclude: ['@fal-ai/client']
+    exclude: ['@fal-ai/client', '@google/genai']
   }
 }));
