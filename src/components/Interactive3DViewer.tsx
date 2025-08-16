@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { RotateCcw, ZoomIn, ZoomOut, Move, MousePointer, Maximize, Play, Pause, Eye, Settings, Building, Map } from "lucide-react";
-import { CityMapViewer } from "./CityMapViewer";
-import { Building3DViewer } from "./Building3DViewer";
+import { RotateCcw, ZoomIn, ZoomOut, Move, MousePointer, Maximize, Play, Pause, Eye, Settings } from "lucide-react";
 interface Interactive3DViewerProps {
   modelType?: "traditional-house" | "modern-villa" | "commercial-building";
   className?: string;
@@ -12,7 +10,6 @@ export const Interactive3DViewer = ({
   className = ""
 }: Interactive3DViewerProps) => {
   const [zoom, setZoom] = useState(1);
-  const [viewMode, setViewMode] = useState<'building' | 'cityMap'>('building');
   const viewerRef = useRef<HTMLDivElement>(null);
 
   // Fixed rotation for stable view
@@ -24,10 +21,6 @@ export const Interactive3DViewer = ({
   const handleZoomOut = () => setZoom(prev => Math.max(0.5, prev - 0.2));
   const handleReset = () => {
     setZoom(1);
-  };
-
-  const toggleViewMode = () => {
-    setViewMode(prev => prev === 'building' ? 'cityMap' : 'building');
   };
 
   // Handle mouse wheel for zoom
@@ -61,42 +54,39 @@ export const Interactive3DViewer = ({
   const modelDetails = getModelDetails();
   return <div className={`relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-lg overflow-hidden ${className}`}>
       {/* 3D Viewer Canvas */}
-      <div ref={viewerRef} className="aspect-square relative cursor-zoom-in select-none min-h-[450px]" onWheel={handleWheel}>
-        {viewMode === 'building' ? (
-          <div className="w-full h-full relative" style={{
-            background: `
-              radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-              linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)
-            `
-          }}>
-            {/* 3D Model Image */}
-            <div className="absolute inset-0 flex items-center justify-center transition-transform duration-300" style={{
-              transform: `scale(${zoom})`
-            }}>
-              <div className="relative">
-                <img src="/lovable-uploads/e9a4ec08-e9d6-4d04-be9e-7c586c91dc8a.png" alt="Traditional House 3D Model" className="max-w-none w-80 h-80 object-contain transition-all duration-300 filter drop-shadow-2xl" style={{
-                  filter: "drop-shadow(0 25px 50px rgba(0,0,0,0.5))"
-                }} />
-              </div>
-            </div>
-
-            {/* Grid Floor */}
-            <div className="absolute bottom-0 left-0 right-0 h-1/3 opacity-20" style={{
-              backgroundImage: `
-                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-              `,
-              backgroundSize: "20px 20px"
-            }} />
+      <div ref={viewerRef} className="aspect-square relative cursor-zoom-in select-none min-h-[450px]" onWheel={handleWheel} style={{
+      background: `
+            radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+            linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)
+          `
+    }}>
+        {/* 3D Model Image */}
+        <div className="absolute inset-0 flex items-center justify-center transition-transform duration-300" style={{
+        transform: `scale(${zoom})`
+      }}>
+          <div className="relative">
+            <img src="/lovable-uploads/e9a4ec08-e9d6-4d04-be9e-7c586c91dc8a.png" alt="Traditional House 3D Model" className="max-w-none w-80 h-80 object-contain transition-all duration-300 filter drop-shadow-2xl" style={{
+            filter: "drop-shadow(0 25px 50px rgba(0,0,0,0.5))"
+          }} />
           </div>
-        ) : (
-          <CityMapViewer className="w-full h-full" />
-        )}
+        </div>
+
+        {/* Grid Floor */}
+        <div className="absolute bottom-0 left-0 right-0 h-1/3 opacity-20" style={{
+        backgroundImage: `
+                 linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                 linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+               `,
+        backgroundSize: "20px 20px"
+      }} />
+
+        {/* Information Overlay */}
+        
 
         {/* Zoom Level Indicator */}
         <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm rounded-lg px-3 py-1 text-white text-xs">
-          {viewMode === 'building' ? `تكبير: ${Math.round(zoom * 100)}%` : 'عرض الخريطة التفاعلية'}
+          تكبير: {Math.round(zoom * 100)}%
         </div>
       </div>
 
@@ -113,37 +103,11 @@ export const Interactive3DViewer = ({
         </Button>
       </div>
 
-      {/* View Mode Toggle Button */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-3">
-        <Button 
-          variant="outline" 
-          onClick={toggleViewMode}
-          className="bg-black/70 border-white/20 text-white hover:bg-black/90 flex items-center gap-2"
-        >
-          {viewMode === 'building' ? (
-            <>
-              <Map className="w-4 h-4" />
-              <span>عرض الخريطة</span>
-            </>
-          ) : (
-            <>
-              <Building className="w-4 h-4" />
-              <span>عرض المبنى</span>
-            </>
-          )}
-        </Button>
-
-        {/* Interaction Hints */}
-        <div className="bg-black/70 backdrop-blur-sm rounded-lg px-4 py-2 text-white text-xs flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <ZoomIn className="w-3 h-3" />
-            <span>
-              {viewMode === 'building' 
-                ? 'استخدم عجلة الفأرة للتكبير والتصغير' 
-                : 'اسحب للدوران • مرر للتكبير'
-              }
-            </span>
-          </div>
+      {/* Interaction Hints */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 backdrop-blur-sm rounded-lg px-4 py-2 text-white text-xs flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <ZoomIn className="w-3 h-3" />
+          <span>استخدم عجلة الفأرة للتكبير والتصغير</span>
         </div>
       </div>
     </div>;
