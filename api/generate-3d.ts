@@ -3,7 +3,7 @@ import { GoogleGenAI, Modality } from '@google/genai';
 import { fal } from '@fal-ai/client';
 
 export const config = {
-  runtime: 'nodejs20.x',
+  runtime: 'nodejs',
 };
 
 export default async function handler(req: Request): Promise<Response> {
