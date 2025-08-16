@@ -289,11 +289,12 @@ export const Preview = () => {
 
   <div className="bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-xl h-[calc(100%-50px)] flex items-center justify-center relative border border-gray-700">
   {project?.modelUrl ? (
-  <iframe
-    src={`https://model-viewer.dev/examples/loading/?src=${encodeURIComponent(project.modelUrl)}`}
-    style={{ width: '100%', height: '100%', border: 'none', borderRadius: '8px' }}
-    title="3D Model Viewer"
-  />
+  <model-viewer
+    src={project.modelUrl}
+    camera-controls
+    auto-rotate
+    style={{ width: '100%', height: '100%', background: '#111' }}
+  ></model-viewer>
 ) : (
   <div className="text-center text-gray-300">
     <p>لم يتم تحميل نموذج ثلاثي الأبعاد بعد.</p>
