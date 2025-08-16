@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, FileText, Brain, Palette, Loader2 } from "lucide-react";
-import { generate3D_JSON, fileToDataURL } from "@/lib/generated3d";
-import { toast } from "sonner";
 
 interface ProcessingStep {
   id: string;
@@ -64,47 +62,10 @@ export const ProcessingPage = () => {
           )
         );
 
-        // إذا كانت هذه الخطوة الأخيرة، ابدأ توليد النموذج ثلاثي الأبعاد
+        // إذا كانت هذه الخطوة الأخيرة، انتقل إلى صفحة المحرر
         if (index === processSteps.length - 1) {
-          setTimeout(async () => {
-            try {
-              console.log('Starting 3D model generation...');
-              const currentProject = JSON.parse(localStorage.getItem('currentProject') || '{}');
-              const prompt = currentProject.content || "تصميم منزل تقليدي";
-              console.log('Project prompt:', prompt);
-              
-              // جمع الصور المرجعية
-              const refs: string[] = [];
-              if (currentProject.uploadedFiles) {
-                console.log('Processing uploaded files:', currentProject.uploadedFiles.length);
-                for (const file of currentProject.uploadedFiles) {
-                  if (file.type?.startsWith('image/')) {
-                    console.log('Converting file to dataURL:', file.name);
-                    refs.push(await fileToDataURL(file));
-                  }
-                }
-              }
-              console.log('Reference images count:', refs.length);
-              
-              console.log('Calling generate3D_JSON...');
-              const modelUrl = await generate3D_JSON({ prompt, refs });
-              console.log('Generated model URL:', modelUrl);
-              
-              const finalProject = {
-                ...currentProject,
-                modelUrl,
-                generatedAt: new Date().toISOString()
-              };
-              
-              localStorage.setItem('finalProject', JSON.stringify(finalProject));
-              console.log('Saved to localStorage:', finalProject);
-              toast.success('تم إنشاء النموذج ثلاثي الأبعاد بنجاح');
-              navigate("/final-results");
-            } catch (error) {
-              console.error('Error generating 3D model:', error);
-              toast.error('حدث خطأ في إنشاء النموذج ثلاثي الأبعاد');
-              navigate("/preview");
-            }
+          setTimeout(() => {
+            navigate("/preview");
           }, 1000);
         }
       }, totalDuration);

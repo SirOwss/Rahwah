@@ -287,21 +287,20 @@ export const Preview = () => {
     </div>
   </div>
 
-   <div className="bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-xl h-[calc(100%-50px)] flex items-center justify-center relative border border-gray-700">
-     {project?.modelUrl ? (
-       <div className="w-full h-full flex items-center justify-center">
-         <iframe
-           src={`https://model-viewer.dev/docs/index.html?src=${encodeURIComponent(project.modelUrl)}`}
-           className="w-full h-full border-0"
-           title="3D Model Viewer"
-         />
-       </div>
-     ) : (
-       <div className="text-center text-gray-300">
-         <p>لم يتم تحميل نموذج ثلاثي الأبعاد بعد.</p>
-         <p className="text-sm text-gray-400 mt-2">أرجع لصفحة الإدخال وأنشئ نموذجًا.</p>
-       </div>
-     )}
+  <div className="bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-xl h-[calc(100%-50px)] flex items-center justify-center relative border border-gray-700">
+  {project?.modelUrl ? (
+  <model-viewer
+    src={project.modelUrl}
+    camera-controls
+    auto-rotate
+    style={{ width: '100%', height: '100%', background: '#111' }}
+  ></model-viewer>
+) : (
+  <div className="text-center text-gray-300">
+    <p>لم يتم تحميل نموذج ثلاثي الأبعاد بعد.</p>
+    <p className="text-sm text-gray-400 mt-2">أرجع لصفحة الإدخال وأنشئ نموذجًا.</p>
+  </div>
+)}
 
 
     {/* Hint */}
