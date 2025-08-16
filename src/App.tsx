@@ -10,7 +10,7 @@ import { ProjectData } from "./pages/ProjectData";
 
 import { Preview } from "./pages/Preview";
 import { ProcessingPage } from "./pages/ProcessingPage";
-import { FinalResults } from "./pages/FinalResults";
+import FinalResults from "./pages/FinalResults";
 import { History } from "./pages/History";
 import { Demo } from "./pages/Demo";
 import NotFound from "./pages/NotFound";
