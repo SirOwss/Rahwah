@@ -61,6 +61,7 @@ export const FinalResults = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const navigate = useNavigate();
 
+  // اجلب بيانات المشروع النهائي
   useEffect(() => {
     const finalProject = localStorage.getItem("finalProject");
     if (finalProject) {
@@ -71,121 +72,53 @@ export const FinalResults = () => {
     }
   }, [navigate]);
 
-  const handleDownload = (format: string) => {
-    toast.success(`تم تحميل الملف بتنسيق ${format}`);
+  // رابط GLB من finalProject أو currentProject كحل احتياطي
+  const finalProject = JSON.parse(localStorage.getItem("finalProject") || "null");
+  const currentProject = JSON.parse(localStorage.getItem("currentProject") || "null");
+  const modelUrl: string | null = finalProject?.modelUrl || currentProject?.modelUrl || null;
+
+  // تنزيلات: يدعم النموذج ثلاثي الأبعاد فعليًا إن توفر الرابط
+  const handleDownload = (kind: string) => {
+    if (kind === "3D" || kind === "3D_MODEL" || kind === "MODEL") {
+      if (!modelUrl) {
+        toast.error("لا يوجد نموذج ثلاثي الأبعاد متاح للتنزيل");
+        return;
+      }
+      const a = document.createElement("a");
+      a.href = modelUrl;
+      a.download = "model.glb";
+      a.click();
+      toast.success("تم تنزيل النموذج ثلاثي الأبعاد");
+      return;
+    }
+    // البقية حالياً Placeholder
+    toast.success(`تم تجهيز التحميل: ${kind}`);
   };
 
-<<<<<<< HEAD
-  const finalProject = JSON.parse(localStorage.getItem('finalProject') || 'null');
-  const modelUrl = finalProject?.modelUrl || JSON.parse(localStorage.getItem('currentProject') || 'null')?.modelUrl || null;
-
-  const handleDownload = (type: string) => {
-  if (type === '3D') {
-    if (!modelUrl) return;
-    const a = document.createElement('a');
-    a.href = modelUrl;
-    a.download = 'model.glb';
-    a.click();
-    return;
-  }
-  console.log(`تحميل ${type}`);
-};
-
-  
-
-  const handlePrintDetailedReport = () => {
-    const printContent = document.getElementById('detailed-report-content');
-    if (printContent) {
-      const printWindow = window.open('', '', 'width=800,height=600');
-      if (printWindow) {
-        printWindow.document.write(`
-          <html>
-            <head>
-              <title>التقرير الشامل للمشروع المعماري</title>
-              <style>
-                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; direction: rtl; text-align: right; margin: 20px; }
-                .space-y-8 > * + * { margin-top: 2rem; }
-                .space-y-6 > * + * { margin-top: 1.5rem; }
-                .space-y-4 > * + * { margin-top: 1rem; }
-                .space-y-3 > * + * { margin-top: 0.75rem; }
-                .space-y-2 > * + * { margin-top: 0.5rem; }
-                .grid { display: grid; }
-                .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-                .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-                .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-                .gap-4 { gap: 1rem; }
-                .gap-6 { gap: 1.5rem; }
-                .gap-8 { gap: 2rem; }
-                .text-center { text-align: center; }
-                .font-bold { font-weight: bold; }
-                .text-primary { color: #2563eb; }
-                .text-secondary { color: #7c3aed; }
-                .text-muted-foreground { color: #6b7280; }
-                .border-b { border-bottom: 1px solid #e5e7eb; }
-                .pb-8 { padding-bottom: 2rem; }
-                .p-4 { padding: 1rem; }
-                .p-6 { padding: 1.5rem; }
-                .mb-2 { margin-bottom: 0.5rem; }
-                .mb-3 { margin-bottom: 0.75rem; }
-                .mb-4 { margin-bottom: 1rem; }
-                .rounded { border-radius: 0.375rem; }
-                .bg-muted { background-color: #f3f4f6; }
-                .bg-primary { background-color: #2563eb; color: white; }
-                .leading-relaxed { line-height: 1.625; }
-                .text-sm { font-size: 0.875rem; }
-                .text-xs { font-size: 0.75rem; }
-                .text-lg { font-size: 1.125rem; }
-                .text-xl { font-size: 1.25rem; }
-                .text-2xl { font-size: 1.5rem; }
-                .text-3xl { font-size: 1.875rem; }
-                .text-4xl { font-size: 2.25rem; }
-                .page-break { page-break-after: always; }
-                ul { list-style-type: none; padding: 0; }
-                li { margin: 0.25rem 0; }
-                .flex { display: flex; }
-                .items-center { align-items: center; }
-                .justify-between { justify-content: space-between; }
-                .gap-2 { gap: 0.5rem; }
-                .bg-success { background-color: #10b981; color: white; }
-                .bg-info { background-color: #3b82f6; color: white; }
-                .bg-warning { background-color: #f59e0b; color: white; }
-                table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-                th, td { border: 1px solid #e5e7eb; padding: 0.5rem; text-align: right; }
-                th { background-color: #f3f4f6; font-weight: bold; }
-              </style>
-            </head>
-            <body>
-              ${printContent.innerHTML}
-            </body>
-          </html>
-        `);
-        printWindow.document.close();
-        printWindow.print();
-=======
+  // حفظ في التاريخ
   const saveToHistory = () => {
     if (project) {
       const history = JSON.parse(localStorage.getItem("projectHistory") || "[]");
       const existingIndex = history.findIndex((p: any) => p.id === project.id);
-      
       if (existingIndex > -1) {
         history[existingIndex] = project;
       } else {
         history.unshift(project);
->>>>>>> 7bcd29a417083a99dcef1035bcaa18374ad89424
       }
-      
       localStorage.setItem("projectHistory", JSON.stringify(history));
       localStorage.removeItem("finalProject");
       toast.success("تم حفظ المشروع");
     }
   };
 
+  // مشروع جديد
   const startNewProject = () => {
     localStorage.removeItem("finalProject");
     localStorage.removeItem("currentProject");
     navigate("/services");
   };
 
+  // طباعة التقرير
   const handlePrint = () => {
     window.print();
   };
