@@ -71,22 +71,27 @@ export const FinalResults = () => {
     }
   }, [navigate]);
 
+  const handleDownload = (format: string) => {
+    toast.success(`تم تحميل الملف بتنسيق ${format}`);
+  };
 
-
+<<<<<<< HEAD
   const finalProject = JSON.parse(localStorage.getItem('finalProject') || 'null');
   const modelUrl = finalProject?.modelUrl || JSON.parse(localStorage.getItem('currentProject') || 'null')?.modelUrl || null;
 
   const handleDownload = (type: string) => {
-    if (type === '3D') {
-      if (!modelUrl) return;
-      const a = document.createElement('a');
-      a.href = modelUrl;
-      a.download = 'model.glb';
-      a.click();
-      return;
-    }
-    console.log(`تحميل ${type}`);
-  };
+  if (type === '3D') {
+    if (!modelUrl) return;
+    const a = document.createElement('a');
+    a.href = modelUrl;
+    a.download = 'model.glb';
+    a.click();
+    return;
+  }
+  console.log(`تحميل ${type}`);
+};
+
+  
 
   const handlePrintDetailedReport = () => {
     const printContent = document.getElementById('detailed-report-content');
@@ -156,10 +161,7 @@ export const FinalResults = () => {
         `);
         printWindow.document.close();
         printWindow.print();
-      }
-    }
-  };
-
+=======
   const saveToHistory = () => {
     if (project) {
       const history = JSON.parse(localStorage.getItem("projectHistory") || "[]");
@@ -169,6 +171,7 @@ export const FinalResults = () => {
         history[existingIndex] = project;
       } else {
         history.unshift(project);
+>>>>>>> 7bcd29a417083a99dcef1035bcaa18374ad89424
       }
       
       localStorage.setItem("projectHistory", JSON.stringify(history));

@@ -19,17 +19,4 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  build: {
-    rollupOptions: {
-      external: ['@fal-ai/client', '@google/genai'],
-      output: {
-        manualChunks: undefined
-      }
-    },
-    target: 'es2020',
-    minify: 'esbuild'
-  },
-  optimizeDeps: {
-    exclude: ['@fal-ai/client', '@google/genai']
-  }
 }));
