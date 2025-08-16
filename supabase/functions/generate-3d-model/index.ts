@@ -9,6 +9,8 @@ const corsHeaders = {
 
 serve(async (req) => {
   console.log('🚀 Edge function called:', req.method);
+  console.log('🔗 Request URL:', req.url);
+  console.log('📋 Request headers:', Object.fromEntries(req.headers.entries()));
 
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -17,7 +19,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    console.log('📥 Request body:', body);
+    console.log('📥 Request body:', JSON.stringify(body, null, 2));
     
     const { prompt, imageUrls = [] } = body;
     

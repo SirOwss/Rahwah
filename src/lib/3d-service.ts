@@ -17,13 +17,15 @@ export class ThreeDService {
   static async generate3DModel(request: Generate3DRequest): Promise<Generate3DResponse> {
     try {
       console.log('🚀 Starting 3D model generation:', request);
+      console.log('🌐 Supabase URL check: https://saaoxoiqyaoneecqirzv.supabase.co');
       
       // استخدام Supabase Edge Function
       const { data, error } = await supabase.functions.invoke('generate-3d-model', {
         body: request,
       });
 
-      console.log('📡 Supabase Function Response:', { data, error });
+      console.log('📡 Supabase Function Response (data):', data);
+      console.log('📡 Supabase Function Response (error):', error);
       
       if (error) {
         console.error('❌ Supabase Function Error:', error);
@@ -55,11 +57,19 @@ export class ThreeDService {
   // تشخيص الاتصال
   static async testConnection() {
     try {
+      console.log('🔌 Testing connection to Supabase function...');
+      console.log('🌐 Using Supabase URL: https://saaoxoiqyaoneecqirzv.supabase.co');
+      
       const { data, error } = await supabase.functions.invoke('generate-3d-model', {
         body: { prompt: 'test connection' },
       });
+      
+      console.log('🔌 Connection test - data:', data);
+      console.log('🔌 Connection test - error:', error);
+      
       return { success: !error, data, error };
     } catch (error) {
+      console.error('🔌 Connection test failed:', error);
       return { success: false, error: error.message };
     }
   }
