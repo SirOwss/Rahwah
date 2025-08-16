@@ -420,6 +420,265 @@ export const FinalResults = () => {
             </Card>
           </div>
 
+          {/* AI Inputs Section - Print */}
+          <div className="print:break-before-page">
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bot className="w-5 h-5" />
+                  مدخلات الذكاء الاصطناعي
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="bg-muted/30 p-4 rounded-lg">
+                  <h3 className="font-semibold mb-3">النص المُدخل (Prompt):</h3>
+                  <div className="bg-background p-4 rounded border border-dashed">
+                    <p className="font-mono text-sm">{project.content || "تصميم منزل تقليدي بفناء مركزي، يتضمن 4 غرف نوم وصالة ومطبخ ودورات مياه، مع التركيز على الطراز المعماري التراثي والاستفادة من الإضاءة الطبيعية"}</p>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="font-semibold mb-3">معلمات النموذج:</h3>
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-medium">نسخة النموذج</TableCell>
+                          <TableCell>GPT-4 Architecture v2.1</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">Temperature</TableCell>
+                          <TableCell>0.7</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">Top-p</TableCell>
+                          <TableCell>0.9</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">Seed</TableCell>
+                          <TableCell>42</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold mb-3">قيود التصميم:</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-center gap-2">
+                        <span className="w-4 h-4 text-primary">•</span>
+                        الحد الأقصى للارتفاع: 6 أمتار
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-4 h-4 text-primary">•</span>
+                        الانتكاسات: 3م من جميع الجهات
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-4 h-4 text-primary">•</span>
+                        نسبة التغطية: 50% كحد أقصى
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="w-4 h-4 text-primary">•</span>
+                        عدد المواقف: 2 كحد أدنى
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold mb-3">مستوى التفاصيل المستهدف:</h3>
+                  <Badge variant="outline" className="mr-2">LOD 300</Badge>
+                  <span className="text-sm text-muted-foreground">
+                    مستوى مناسب للتطوير التفصيلي والحصول على تراخيص البناء
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Site Analysis Section - Print */}
+          <div className="print:break-before-page">
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MapPin className="w-5 h-5" />
+                  بيانات الموقع والسياق
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="font-semibold mb-3">معلومات الموقع:</h3>
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-medium">إحداثيات المركز</TableCell>
+                          <TableCell>24.7136° N, 46.6753° E</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">مساحة الموقع</TableCell>
+                          <TableCell>500 م²</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">منسوب المرجع</TableCell>
+                          <TableCell>612 م فوق سطح البحر</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">اتجاه الشمال</TableCell>
+                          <TableCell>الشمال الحقيقي</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold mb-3">التحليل البيئي:</h3>
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-medium">المناخ</TableCell>
+                          <TableCell>صحراوي حار</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">اتجاه الرياح السائدة</TableCell>
+                          <TableCell>شمالي غربي</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">متوسط درجة الحرارة</TableCell>
+                          <TableCell>26°C سنوياً</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium">الإشعاع الشمسي</TableCell>
+                          <TableCell>عالي جداً</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+
+                <div className="bg-muted/30 p-4 rounded-lg">
+                  <h3 className="font-semibold mb-3">تحليل المخاطر البيئية:</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="text-sm font-medium mb-2">المخاطر المحتملة:</h4>
+                      <ul className="text-xs space-y-1">
+                        <li>• العواصف الرملية الموسمية</li>
+                        <li>• درجات الحرارة العالية صيفاً</li>
+                        <li>• نقص الأمطار وشح المياه</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium mb-2">الحلول المقترحة:</h4>
+                      <ul className="text-xs space-y-1">
+                        <li>• استخدام مواد مقاومة للعوامل الجوية</li>
+                        <li>• أنظمة عزل حراري متقدمة</li>
+                        <li>• تجميع مياه الأمطار</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sustainability Section - Print */}
+          <div className="print:break-before-page">
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                  </svg>
+                  الاستدامة والكفاءة البيئية
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <h3 className="font-semibold text-green-800 mb-2">كفاءة الطاقة</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>تقييم الطاقة:</span>
+                        <Badge className="bg-green-100 text-green-800">A+</Badge>
+                      </div>
+                      <p className="text-xs text-green-700">استهلاك طاقة منخفض</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <h3 className="font-semibold text-blue-800 mb-2">إدارة المياه</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>الكفاءة:</span>
+                        <Badge className="bg-blue-100 text-blue-800">عالية</Badge>
+                      </div>
+                      <p className="text-xs text-blue-700">توفير 40% من المياه</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                    <h3 className="font-semibold text-amber-800 mb-2">المواد المستدامة</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>النسبة:</span>
+                        <Badge className="bg-amber-100 text-amber-800">75%</Badge>
+                      </div>
+                      <p className="text-xs text-amber-700">مواد محلية ومعاد تدويرها</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="font-semibold mb-3">أنظمة الطاقة المتجددة:</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                        ألواح شمسية بقدرة 15 كيلو وات
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        سخان مياه شمسي 300 لتر
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        إضاءة LED بأجهزة استشعار
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                        نظام إدارة ذكية للطاقة
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold mb-3">معايير الاستدامة:</h3>
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="text-sm font-medium">LEED Rating</TableCell>
+                          <TableCell className="text-sm">Gold</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-sm font-medium">Carbon Footprint</TableCell>
+                          <TableCell className="text-sm">منخفض جداً</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-sm font-medium">مؤشر الاستدامة</TableCell>
+                          <TableCell className="text-sm">4.8/5</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-sm font-medium">عمر المبنى المتوقع</TableCell>
+                          <TableCell className="text-sm">100+ سنة</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
           {/* Cost Analysis */}
           <div className="print:break-before-page">
             <Card className="mb-8">
@@ -429,7 +688,7 @@ export const FinalResults = () => {
                   التحليل المالي التفصيلي
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-6">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -484,6 +743,219 @@ export const FinalResults = () => {
                     </TableRow>
                   </TableBody>
                 </Table>
+
+                <div className="grid grid-cols-2 gap-6 mt-6">
+                  <div>
+                    <h3 className="font-semibold mb-3">جدولة المدفوعات المقترحة:</h3>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="text-xs">المرحلة</TableHead>
+                          <TableHead className="text-xs">النسبة</TableHead>
+                          <TableHead className="text-xs">المبلغ</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="text-xs">عقد المقاولة</TableCell>
+                          <TableCell className="text-xs">10%</TableCell>
+                          <TableCell className="text-xs">45,000 ريال</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-xs">بداية الأعمال</TableCell>
+                          <TableCell className="text-xs">20%</TableCell>
+                          <TableCell className="text-xs">90,000 ريال</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-xs">انتهاء الهيكل</TableCell>
+                          <TableCell className="text-xs">30%</TableCell>
+                          <TableCell className="text-xs">135,000 ريال</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-xs">انتهاء التشطيبات</TableCell>
+                          <TableCell className="text-xs">30%</TableCell>
+                          <TableCell className="text-xs">135,000 ريال</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-xs">التسليم النهائي</TableCell>
+                          <TableCell className="text-xs">10%</TableCell>
+                          <TableCell className="text-xs">45,000 ريال</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold mb-3">توقع التوفير السنوي:</h3>
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center p-2 bg-green-50 rounded">
+                        <span className="text-sm">توفير الطاقة:</span>
+                        <span className="font-semibold text-green-600">12,000 ريال</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-blue-50 rounded">
+                        <span className="text-sm">توفير المياه:</span>
+                        <span className="font-semibold text-blue-600">3,500 ريال</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-purple-50 rounded">
+                        <span className="text-sm">صيانة أقل:</span>
+                        <span className="font-semibold text-purple-600">5,000 ريال</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-primary/10 rounded font-bold">
+                        <span className="text-sm">المجموع السنوي:</span>
+                        <span className="text-primary">20,500 ريال</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Safety and Compliance - Print */}
+          <div className="print:break-before-page">
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  السلامة والامتثال التنظيمي
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="font-semibold mb-3">معايير السلامة:</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        نظام إنذار الحريق المتقدم
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        مخارج طوارئ متعددة
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        أنظمة رش المياه الأوتوماتيكية
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        إضاءة طوارئ LED
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        أنظمة أمان للأطفال
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-semibold mb-3">الامتثال التنظيمي:</h3>
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="text-sm font-medium">كود البناء السعودي</TableCell>
+                          <TableCell className="text-sm">
+                            <Badge className="bg-green-100 text-green-800">متوافق</Badge>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-sm font-medium">معايير الدفاع المدني</TableCell>
+                          <TableCell className="text-sm">
+                            <Badge className="bg-green-100 text-green-800">متوافق</Badge>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-sm font-medium">معايير البيئة</TableCell>
+                          <TableCell className="text-sm">
+                            <Badge className="bg-green-100 text-green-800">متوافق</Badge>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="text-sm font-medium">كود الطاقة</TableCell>
+                          <TableCell className="text-sm">
+                            <Badge className="bg-green-100 text-green-800">متوافق</Badge>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+
+                <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <h3 className="font-semibold text-yellow-800 mb-2">تنويه مهم:</h3>
+                  <p className="text-sm text-yellow-700">
+                    جميع التصاميم والمواصفات تتطلب مراجعة ومصادقة من الجهات المختصة قبل بدء التنفيذ. 
+                    يُنصح بالتنسيق مع مكتب هندسي معتمد لاستكمال الدراسات التفصيلية والحصول على التراخيص اللازمة.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Digital Deliverables - Print */}
+          <div className="print:break-before-page">
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14,2 14,8 20,8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10,9 9,9 8,9"/>
+                  </svg>
+                  المخرجات الرقمية والملفات
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="border rounded-lg p-4 text-center">
+                    <FileText className="w-8 h-8 mx-auto mb-2 text-blue-500" />
+                    <h3 className="font-semibold text-sm mb-1">ملفات CAD</h3>
+                    <p className="text-xs text-muted-foreground">DWG, DXF</p>
+                  </div>
+                  <div className="border rounded-lg p-4 text-center">
+                    <svg className="w-8 h-8 mx-auto mb-2 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                      <polyline points="14,2 14,8 20,8"/>
+                    </svg>
+                    <h3 className="font-semibold text-sm mb-1">نماذج ثلاثية الأبعاد</h3>
+                    <p className="text-xs text-muted-foreground">3DS, OBJ, FBX</p>
+                  </div>
+                  <div className="border rounded-lg p-4 text-center">
+                    <Download className="w-8 h-8 mx-auto mb-2 text-purple-500" />
+                    <h3 className="font-semibold text-sm mb-1">تقارير PDF</h3>
+                    <p className="text-xs text-muted-foreground">تقارير تفصيلية</p>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold mb-3">محتويات المجلد الرقمي:</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="text-sm font-medium mb-2">المخططات المعمارية:</h4>
+                      <ul className="text-xs space-y-1">
+                        <li>• المخطط الأرضي (مقياس 1:100)</li>
+                        <li>• الواجهات الأربع (مقياس 1:100)</li>
+                        <li>• المقاطع الطولية والعرضية</li>
+                        <li>• تفاصيل معمارية (مقياس 1:20)</li>
+                        <li>• مخططات الأسقف والبلكونات</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium mb-2">المخططات التقنية:</h4>
+                      <ul className="text-xs space-y-1">
+                        <li>• مخططات الكهرباء والإضاءة</li>
+                        <li>• مخططات السباكة والصرف</li>
+                        <li>• مخططات التكييف والتهوية</li>
+                        <li>• مخططات الأنظمة الذكية</li>
+                        <li>• تفاصيل الأساسات الإنشائية</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
