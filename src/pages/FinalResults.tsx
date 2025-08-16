@@ -22,9 +22,22 @@ const FinalResults = () => {
     date: new Date().toLocaleDateString('ar-SA')
   };
 
+  const finalProject = JSON.parse(localStorage.getItem('finalProject') || 'null');
+  const modelUrl = finalProject?.modelUrl || JSON.parse(localStorage.getItem('currentProject') || 'null')?.modelUrl || null;
+
   const handleDownload = (type: string) => {
-    console.log(`تحميل ${type}`);
-  };
+  if (type === '3D') {
+    if (!modelUrl) return;
+    const a = document.createElement('a');
+    a.href = modelUrl;
+    a.download = 'model.glb';
+    a.click();
+    return;
+  }
+  console.log(`تحميل ${type}`);
+};
+
+  
 
   const handlePrintDetailedReport = () => {
     const printContent = document.getElementById('detailed-report-content');

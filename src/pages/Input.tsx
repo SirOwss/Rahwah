@@ -5,8 +5,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Upload, FileText, Image, Video, Send, ArrowRight, MessageSquare, Camera, Sparkles } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
+// + NEW
+import { generate3D_JSON, fileToDataURL } from "@/lib/generated3d";
+// + END NEW
+
 
 export const Input = () => {
+  // داخل الـ component
+  const [submitting, setSubmitting] = useState(false);
+
   const [searchParams] = useSearchParams();
   const [inputType, setInputType] = useState<"upload" | "prompt">("prompt");
   const [promptText, setPromptText] = useState("");
@@ -55,34 +62,57 @@ export const Input = () => {
     }
   };
 
-  const handleSubmit = () => {
-    if (inputType === "prompt" && !promptText.trim()) {
-      toast.error("يرجى إدخال وصف للمبنى");
-      return;
-    }
-    
-    if (inputType === "upload" && !uploadedFiles) {
-      toast.error("يرجى رفع ملف واحد على الأقل");
-      return;
-    }
-
-    // Save data to localStorage for demo purposes
-    const projectData = {
-      type: inputType,
-      content: inputType === "prompt" ? promptText : undefined,
-      files: inputType === "upload" ? Array.from(uploadedFiles || []).map(f => f.name) : undefined,
-      status: "processing",
-      timestamp: Date.now(),
-      title: inputType === "prompt" ? "مشروع من الوصف النصي" : "مشروع من الصور"
-    };
-
-    localStorage.setItem("currentProject", JSON.stringify(projectData));
-    toast.success("تم إرسال المشروع بنجاح!");
-    
-    setTimeout(() => {
+  const handleSubmit = async () => {
+    try {
+      if (inputType === "prompt" && !promptText.trim()) {
+        toast.error("يرجى إدخال وصف للمبنى");
+        return;
+      }
+      if (inputType === "upload" && !uploadedFiles) {
+        toast.error("يرجى رفع ملف واحد على الأقل");
+        return;
+      }
+  
+      setSubmitting(true);
+  
+      const aseerPrompt = `
+  صمّم مبنى واحدًا بهوية عسير (طراز أبهى الجبلي): جدران حجر محلي منتظمة،
+  حليات جصية بيضاء، وزخارف «القط العسيري» كأحزمة زخرفية. حافظ على نفس المواد
+  والألوان والفتحات وخط السقف وعدد الأدوار في جميع الجهات. خلفية حيادية.
+  
+  ${promptText?.trim() || ""}
+      `.trim();
+  
+      let refs: string[] = [];
+      if (uploadedFiles && uploadedFiles.length > 0) {
+        const imgs = Array.from(uploadedFiles).filter(f => f.type.startsWith("image/"));
+        refs = await Promise.all(imgs.map(fileToDataURL));
+      }
+  
+      const modelUrl = await generate3D_JSON({ prompt: aseerPrompt, refs });
+  
+      const projectData = {
+        type: inputType,
+        content: inputType === "prompt" ? promptText : "مشروع من الصور",
+        files: uploadedFiles ? Array.from(uploadedFiles).map(f => f.name) : undefined,
+        status: "completed",
+        timestamp: Date.now(),
+        title: inputType === "prompt" ? "مشروع من الوصف النصي" : "مشروع من الصور",
+        modelUrl, // مهم
+      };
+  
+      localStorage.setItem("currentProject", JSON.stringify(projectData));
+      toast.success("تم إنشاء النموذج ثلاثي الأبعاد بنجاح!");
       navigate("/preview");
-    }, 1500);
+    } catch (e: any) {
+      console.error(e);
+      toast.error(e.message || "فشل الإنشاء");
+    } finally {
+      setSubmitting(false);
+    }
   };
+  
+  
 
   return (
     <div className="min-h-screen pt-16">
@@ -260,16 +290,18 @@ export const Input = () => {
 
           {/* Submit Button */}
           <div className="mt-6 md:mt-8 flex justify-center">
-            <Button
-              size="lg"
-              onClick={handleSubmit}
-              className="btn-primary px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold mobile-touch w-full sm:w-auto"
-              disabled={!promptText.trim() && !uploadedFiles}
-            >
-              <Send className="w-4 md:w-5 h-4 md:h-5 mr-2" />
-              إنشاء المخططات
-              <ArrowRight className="w-4 md:w-5 h-4 md:h-5 ml-2" />
-            </Button>
+          <Button
+  size="lg"
+  onClick={handleSubmit}
+  className="btn-primary px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold mobile-touch w-full sm:w-auto"
+  disabled={submitting || (!promptText.trim() && !uploadedFiles)}
+>
+  <Send className="w-4 md:w-5 h-4 md:h-5 mr-2" />
+  {submitting ? "جاري الإنشاء..." : "إنشاء المخططات"}
+  <ArrowRight className="w-4 md:w-5 h-4 md:h-5 ml-2" />
+</Button>
+
+
           </div>
         </Card>
 

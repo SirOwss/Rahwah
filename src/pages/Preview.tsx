@@ -39,20 +39,23 @@ export const Preview = () => {
         ...projectData,
         status: "completed",
         id: Date.now(),
-        title: "مشروع عمارة تقليدية"
+        title: projectData.title || "مشروع عمارة تقليدية",
+        modelUrl: projectData.modelUrl || null, // <<<<<<
       };
       setProject(newProject);
     } else {
       const demoProject = {
         type: "demo",
-        content: "منزل تقليدي من طابقين من الطوب الطيني مع ثلاث غرف نوم ومدخل شرقي وفناء مركزي ونوافذ خشبية مزخرفة",
+        content: "منزل تقليدي من طابقين من الطوب الطيني ...",
         status: "completed",
         id: "demo-001",
-        title: "مشروع المنزل التقليدي - عرض توضيحي"
+        title: "مشروع المنزل التقليدي - عرض توضيحي",
+        modelUrl: null, // لا يوجد رابط حقيقي
       };
       setProject(demoProject);
     }
   }, []);
+  
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = new FabricCanvas(canvasRef.current, {
@@ -129,9 +132,11 @@ export const Preview = () => {
       setTimeout(() => {
         const finalProject = {
           ...project,
-          customization: customization,
-          finalizedAt: Date.now()
+          modelUrl: project?.modelUrl || null,
+          customization,
+          finalizedAt: Date.now(),
         };
+        
         localStorage.setItem("finalProject", JSON.stringify(finalProject));
         navigate("/final-results");
       }, 3000);
@@ -251,39 +256,62 @@ export const Preview = () => {
         </div>
 
         {/* Center - 3D Model Viewer */}
-        <div className="flex-1 bg-gray-850 p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-base font-medium flex items-center gap-2 text-white">
-              <RotateCw className="w-4 h-4" />
-              المعاينة ثلاثية الأبعاد
-            </h3>
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-gray-400">100%</span>
-              <div className="flex gap-1">
-                <Button variant="ghost" size="sm" className="p-1.5 text-gray-400 hover:text-white">
-                  <RotateCw className="w-3.5 h-3.5" />
-                </Button>
-                <Button variant="ghost" size="sm" className="p-1.5 text-gray-400 hover:text-white">
-                  <Eye className="w-3.5 h-3.5" />
-                </Button>
-                <Button variant="ghost" size="sm" className="p-1.5 text-gray-400 hover:text-white">
-                  <Download className="w-3.5 h-3.5" />
-                </Button>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-xl h-[calc(100%-50px)] flex items-center justify-center relative border border-gray-700">
-            <Interactive3DViewer modelType="traditional-house" className="w-full h-full" />
-            
-            {/* Search/AI Button */}
-            <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2">
-              <Button className="bg-gray-800/90 hover:bg-gray-700 text-white border border-gray-600 px-4 py-1.5 text-xs">
-                <span>استخدم عجلة الفأرة للتكبير والتصغير</span>
-              </Button>
-            </div>
-          </div>
-        </div>
+<div className="flex-1 bg-gray-850 p-4">
+  <div className="flex items-center justify-between mb-3">
+    <h3 className="text-base font-medium flex items-center gap-2 text-white">
+      <RotateCw className="w-4 h-4" />
+      المعاينة ثلاثية الأبعاد
+    </h3>
+    <div className="flex items-center gap-3">
+      <span className="text-xs text-gray-400">100%</span>
+      <div className="flex gap-1">
+        <Button variant="ghost" size="sm" className="p-1.5 text-gray-400 hover:text-white" onClick={() => window.location.reload()}>
+          <RotateCw className="w-3.5 h-3.5" />
+        </Button>
+        {project?.modelUrl && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="p-1.5 text-gray-400 hover:text-white"
+            onClick={() => {
+              const a = document.createElement('a');
+              a.href = project.modelUrl;
+              a.download = 'model.glb';
+              a.click();
+            }}
+          >
+            <Download className="w-3.5 h-3.5" />
+          </Button>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <div className="bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-xl h-[calc(100%-50px)] flex items-center justify-center relative border border-gray-700">
+  {project?.modelUrl ? (
+  <model-viewer
+    src={project.modelUrl}
+    camera-controls
+    auto-rotate
+    style={{ width: '100%', height: '100%', background: '#111' }}
+  ></model-viewer>
+) : (
+  <div className="text-center text-gray-300">
+    <p>لم يتم تحميل نموذج ثلاثي الأبعاد بعد.</p>
+    <p className="text-sm text-gray-400 mt-2">أرجع لصفحة الإدخال وأنشئ نموذجًا.</p>
+  </div>
+)}
+
+
+    {/* Hint */}
+    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2">
+      <Button className="bg-gray-800/90 hover:bg-gray-700 text-white border border-gray-600 px-4 py-1.5 text-xs">
+        <span>استخدم عجلة الفأرة للتكبير والتصغير</span>
+      </Button>
+    </div>
+  </div>
+</div>
+
 
         {/* Right Sidebar - 2D Floor Plan and Project Description */}
         <div className="w-80 bg-gray-800 border-l border-gray-700 p-5 space-y-4">
