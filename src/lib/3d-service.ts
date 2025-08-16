@@ -1,4 +1,4 @@
-import { testSupabaseConnection, simulateGeneration } from './debug-service';
+import { supabase } from '@/integrations/supabase/client';
 
 interface Generate3DRequest {
   prompt: string;
@@ -14,54 +14,32 @@ interface Generate3DResponse {
 }
 
 export class ThreeDService {
-  private static getSupabaseUrl() {
-    // استخراج Supabase URL من البيئة أو استخدام localhost للتطوير
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    if (supabaseUrl) {
-      return `${supabaseUrl}/functions/v1/generate-3d-model`;
-    }
-    // fallback للتطوير المحلي
-    return '/api/generate-3d-model';
-  }
-
   static async generate3DModel(request: Generate3DRequest): Promise<Generate3DResponse> {
     try {
       console.log('🚀 Starting 3D model generation:', request);
       
-      // أولاً جرب محاكاة النتائج للتطوير
-      console.log('🎭 Using simulation mode for development...');
-      return await simulateGeneration(request.prompt);
-      
-      /* 
-      // الكود الحقيقي - سيتم تفعيله عند اكتمال الإعداد
-      const response = await fetch(this.getSupabaseUrl(), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY || ''}`,
-        },
-        body: JSON.stringify(request),
+      // استخدام Supabase Edge Function
+      const { data, error } = await supabase.functions.invoke('generate-3d-model', {
+        body: request,
       });
 
-      console.log('📡 API Response status:', response.status);
+      console.log('📡 Supabase Function Response:', { data, error });
       
-      const data = await response.json();
-      console.log('📦 API Response data:', data);
-      
-      if (!response.ok) {
+      if (error) {
+        console.error('❌ Supabase Function Error:', error);
+        throw new Error(error.message || 'فشل في توليد النموذج ثلاثي الأبعاد');
+      }
+
+      if (!data || !data.success) {
         console.error('❌ API Error:', data);
-        throw new Error(data.error || 'فشل في توليد النموذج ثلاثي الأبعاد');
+        throw new Error(data?.error || 'فشل في توليد النموذج ثلاثي الأبعاد');
       }
 
       console.log('✅ 3D model generated successfully');
       return data;
-      */
     } catch (error) {
       console.error('💥 Error generating 3D model:', error);
-      
-      // عند فشل API الحقيقي، استخدم المحاكاة
-      console.log('🎭 Falling back to simulation...');
-      return await simulateGeneration(request.prompt);
+      throw error;
     }
   }
 
@@ -76,6 +54,13 @@ export class ThreeDService {
 
   // تشخيص الاتصال
   static async testConnection() {
-    return await testSupabaseConnection();
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-3d-model', {
+        body: { prompt: 'test connection' },
+      });
+      return { success: !error, data, error };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
   }
 }
