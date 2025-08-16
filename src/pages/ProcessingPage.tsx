@@ -68,20 +68,27 @@ export const ProcessingPage = () => {
         if (index === processSteps.length - 1) {
           setTimeout(async () => {
             try {
+              console.log('Starting 3D model generation...');
               const currentProject = JSON.parse(localStorage.getItem('currentProject') || '{}');
               const prompt = currentProject.content || "تصميم منزل تقليدي";
+              console.log('Project prompt:', prompt);
               
               // جمع الصور المرجعية
               const refs: string[] = [];
               if (currentProject.uploadedFiles) {
+                console.log('Processing uploaded files:', currentProject.uploadedFiles.length);
                 for (const file of currentProject.uploadedFiles) {
                   if (file.type?.startsWith('image/')) {
+                    console.log('Converting file to dataURL:', file.name);
                     refs.push(await fileToDataURL(file));
                   }
                 }
               }
+              console.log('Reference images count:', refs.length);
               
+              console.log('Calling generate3D_JSON...');
               const modelUrl = await generate3D_JSON({ prompt, refs });
+              console.log('Generated model URL:', modelUrl);
               
               const finalProject = {
                 ...currentProject,
@@ -90,6 +97,7 @@ export const ProcessingPage = () => {
               };
               
               localStorage.setItem('finalProject', JSON.stringify(finalProject));
+              console.log('Saved to localStorage:', finalProject);
               toast.success('تم إنشاء النموذج ثلاثي الأبعاد بنجاح');
               navigate("/final-results");
             } catch (error) {
